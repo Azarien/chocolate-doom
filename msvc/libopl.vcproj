@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9.00"
+	Version="9,00"
 	Name="libopl"
 	ProjectGUID="{FC8D0610-1507-4F36-99BC-6F5A422B6AD3}"
 	RootNamespace="libopl"
@@ -17,8 +17,8 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="..\lib"
-			IntermediateDirectory="..\obj\libopl\$(ConfigurationName)"
+			OutputDirectory="..\lib\$(ConfigurationName)"
+			IntermediateDirectory="..\obj\lib\x86opl\$(ConfigurationName)"
 			ConfigurationType="4"
 			CharacterSet="2"
 			>
@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories=".;..\src"
+				AdditionalIncludeDirectories="..\..\SDL_mixer-1.2.12;..\..\SDL_net-1.2.8;..\..\SDL-1.2.15\include;.;..\src"
 				PreprocessorDefinitions="WIN32;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -60,6 +60,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
+				AdditionalLibraryDirectories="&quot;..\..\SDL-1.2.15\VisualC\SDLmain\$(ConfigurationName)&quot;;&quot;..\..\SDL-1.2.15\VisualC\$(ConfigurationName)&quot;;&quot;..\..\SDL_net-1.2.8\VisualC\$(ConfigurationName)&quot;;&quot;..\..\SDL_mixer-1.2.12\VisualC\$(ConfigurationName)&quot;;&quot;..\lib\$(ConfigurationName)&quot;"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -79,8 +80,8 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="..\lib"
-			IntermediateDirectory="..\obj\libopl\$(ConfigurationName)"
+			OutputDirectory="..\lib\$(ConfigurationName)"
+			IntermediateDirectory="..\obj\lib\x86opl\$(ConfigurationName)"
 			ConfigurationType="4"
 			CharacterSet="2"
 			WholeProgramOptimization="1"
@@ -102,13 +103,9 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				Optimization="2"
-				InlineFunctionExpansion="2"
-				EnableIntrinsicFunctions="true"
-				FavorSizeOrSpeed="1"
-				OmitFramePointers="true"
-				WholeProgramOptimization="false"
-				AdditionalIncludeDirectories=".;..\src"
+				Optimization="3"
+				WholeProgramOptimization="true"
+				AdditionalIncludeDirectories="..\..\SDL_mixer-1.2.12;..\..\SDL_net-1.2.8;..\..\SDL-1.2.15\include;.;..\src"
 				PreprocessorDefinitions="WIN32;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE"
 				StringPooling="true"
 				MinimalRebuild="false"
@@ -131,6 +128,76 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
+				AdditionalLibraryDirectories="&quot;..\..\SDL-1.2.15\VisualC\SDLmain\$(ConfigurationName)&quot;;&quot;..\..\SDL-1.2.15\VisualC\$(ConfigurationName)&quot;;&quot;..\..\SDL_net-1.2.8\VisualC\$(ConfigurationName)&quot;;&quot;..\..\SDL_mixer-1.2.12\VisualC\$(ConfigurationName)&quot;;&quot;..\lib\$(ConfigurationName)&quot;"
+				IgnoreDefaultLibraryNames="msvcrtd"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+			/>
+		</Configuration>
+		<Configuration
+			Name="Static|Win32"
+			OutputDirectory="..\lib\$(ConfigurationName)"
+			IntermediateDirectory="..\obj\lib\x86opl\$(ConfigurationName)"
+			ConfigurationType="4"
+			CharacterSet="2"
+			WholeProgramOptimization="1"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				Optimization="3"
+				WholeProgramOptimization="true"
+				AdditionalIncludeDirectories="..\..\SDL_mixer-1.2.12;..\..\SDL_net-1.2.8;..\..\SDL-1.2.15\include;.;..\src"
+				PreprocessorDefinitions="WIN32;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE"
+				StringPooling="true"
+				MinimalRebuild="false"
+				ExceptionHandling="0"
+				RuntimeLibrary="0"
+				BufferSecurityCheck="false"
+				EnableFunctionLevelLinking="false"
+				WarningLevel="3"
+				DebugInformationFormat="0"
+				CompileAs="1"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLibrarianTool"
+				AdditionalLibraryDirectories="&quot;..\..\SDL-1.2.15\VisualC\SDLmain\$(ConfigurationName)&quot;;&quot;..\..\SDL-1.2.15\VisualC\$(ConfigurationName)&quot;;&quot;..\..\SDL_net-1.2.8\VisualC\$(ConfigurationName)&quot;;&quot;..\..\SDL_mixer-1.2.12\VisualC\$(ConfigurationName)&quot;;&quot;..\lib\$(ConfigurationName)&quot;"
 				IgnoreDefaultLibraryNames="msvcrtd"
 			/>
 			<Tool

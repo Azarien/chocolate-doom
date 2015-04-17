@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9.00"
+	Version="9,00"
 	Name="Doom"
 	ProjectGUID="{8B744A3B-8F18-41A0-85A3-293816E85B6E}"
 	RootNamespace="ChocolateDoom"
@@ -18,7 +18,7 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="..\bin"
+			OutputDirectory="..\bin\$(ConfigurationName)"
 			IntermediateDirectory="..\obj\doom\$(ConfigurationName)"
 			ConfigurationType="1"
 			CharacterSet="0"
@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories=".;..\src;..\src\doom;..\textscreen;..\pcsound;..\opl"
+				AdditionalIncludeDirectories="..\..\SDL_mixer-1.2.12;..\..\SDL_net-1.2.8;..\..\SDL-1.2.15\include;.;..\src;..\src\doom;..\textscreen;..\pcsound;..\opl"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;PROGRAM_PREFIX=&quot;\&quot;chocolate-\&quot;&quot;"
 				MinimalRebuild="true"
 				ExceptionHandling="0"
@@ -66,9 +66,11 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="SDL.lib SDL_mixer.lib SDL_net.lib SDLmain.lib"
+				LinkLibraryDependencies="false"
+				AdditionalDependencies="SDL.lib SDL_mixer.lib SDL_net.lib SDLmain.lib libtextscreen.lib libopl.lib libpcsound.lib"
 				OutputFile="$(OutDir)\chocolate-doom-dbg.exe"
 				LinkIncremental="2"
+				AdditionalLibraryDirectories="&quot;..\..\SDL-1.2.15\VisualC\SDLmain\$(ConfigurationName)&quot;;&quot;..\..\SDL-1.2.15\VisualC\$(ConfigurationName)&quot;;&quot;..\..\SDL_net-1.2.8\VisualC\$(ConfigurationName)&quot;;&quot;..\..\SDL_mixer-1.2.12\VisualC\$(ConfigurationName)&quot;;&quot;..\lib\$(ConfigurationName)&quot;"
 				IgnoreDefaultLibraryNames="msvcrt"
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -99,7 +101,7 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="..\bin"
+			OutputDirectory="..\bin\$(ConfigurationName)"
 			IntermediateDirectory="..\obj\doom\$(ConfigurationName)"
 			ConfigurationType="1"
 			CharacterSet="0"
@@ -122,13 +124,9 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				Optimization="2"
-				InlineFunctionExpansion="2"
-				EnableIntrinsicFunctions="true"
-				FavorSizeOrSpeed="1"
-				OmitFramePointers="true"
+				Optimization="3"
 				WholeProgramOptimization="true"
-				AdditionalIncludeDirectories=".;..\src;..\src\doom;..\textscreen;..\pcsound;..\opl"
+				AdditionalIncludeDirectories="..\..\SDL_mixer-1.2.12;..\..\SDL_net-1.2.8;..\..\SDL-1.2.15\include;.;..\src;..\src\doom;..\textscreen;..\pcsound;..\opl"
 				PreprocessorDefinitions="WIN32;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;PROGRAM_PREFIX=&quot;\&quot;chocolate-\&quot;&quot;"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
@@ -148,13 +146,100 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="SDL.lib SDL_mixer.lib SDL_net.lib SDLmain.lib"
+				LinkLibraryDependencies="false"
+				AdditionalDependencies="SDL.lib SDL_mixer.lib SDL_net.lib SDLmain.lib libtextscreen.lib libopl.lib libpcsound.lib"
 				OutputFile="$(OutDir)\chocolate-doom.exe"
 				LinkIncremental="0"
+				AdditionalLibraryDirectories="&quot;..\..\SDL-1.2.15\VisualC\SDLmain\$(ConfigurationName)&quot;;&quot;..\..\SDL-1.2.15\VisualC\$(ConfigurationName)&quot;;&quot;..\..\SDL_net-1.2.8\VisualC\$(ConfigurationName)&quot;;&quot;..\..\SDL_mixer-1.2.12\VisualC\$(ConfigurationName)&quot;;&quot;..\lib\$(ConfigurationName)&quot;"
 				IgnoreDefaultLibraryNames="msvcrtd"
 				GenerateDebugInformation="false"
 				GenerateMapFile="true"
-				SubSystem="1"
+				SubSystem="2"
+				OptimizeReferences="2"
+				EnableCOMDATFolding="2"
+				LinkTimeCodeGeneration="1"
+				DataExecutionPrevention="0"
+				TurnOffAssemblyGeneration="false"
+				TargetMachine="1"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+			/>
+		</Configuration>
+		<Configuration
+			Name="Static|Win32"
+			OutputDirectory="..\bin\$(ConfigurationName)"
+			IntermediateDirectory="..\obj\doom\$(ConfigurationName)"
+			ConfigurationType="1"
+			CharacterSet="0"
+			WholeProgramOptimization="0"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				Optimization="3"
+				WholeProgramOptimization="true"
+				AdditionalIncludeDirectories="..\..\SDL_mixer-1.2.12;..\..\SDL_net-1.2.8;..\..\SDL-1.2.15\include;.;..\src;..\src\doom;..\textscreen;..\pcsound;..\opl"
+				PreprocessorDefinitions="WIN32;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;PROGRAM_PREFIX=&quot;\&quot;chocolate-\&quot;&quot;"
+				RuntimeLibrary="0"
+				EnableFunctionLevelLinking="true"
+				UsePrecompiledHeader="0"
+				WarningLevel="3"
+				DebugInformationFormat="0"
+				CompileAs="1"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				LinkLibraryDependencies="false"
+				AdditionalDependencies="SDL.lib SDL_mixer.lib SDL_net.lib SDLmain.lib libtextscreen.lib libopl.lib libpcsound.lib"
+				OutputFile="$(OutDir)\chocolate-doom.exe"
+				LinkIncremental="0"
+				AdditionalLibraryDirectories="&quot;..\..\SDL-1.2.15\VisualC\SDLmain\$(ConfigurationName)&quot;;&quot;..\..\SDL-1.2.15\VisualC\$(ConfigurationName)&quot;;&quot;..\..\SDL_net-1.2.8\VisualC\$(ConfigurationName)&quot;;&quot;..\..\SDL_mixer-1.2.12\VisualC\$(ConfigurationName)&quot;;&quot;..\lib\$(ConfigurationName)&quot;"
+				IgnoreDefaultLibraryNames="msvcrtd"
+				GenerateDebugInformation="false"
+				GenerateMapFile="true"
+				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				LinkTimeCodeGeneration="1"
@@ -856,6 +941,10 @@
 				</File>
 				<File
 					RelativePath="..\src\doom\deh_ammo.c"
+					>
+				</File>
+				<File
+					RelativePath="..\src\doom\deh_bexstr.c"
 					>
 				</File>
 				<File

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9.00"
+	Version="9,00"
 	Name="Setup"
 	ProjectGUID="{01975BB6-D2DA-48E7-AE0D-6A8AC8ECF48A}"
 	RootNamespace="Setup"
@@ -17,7 +17,7 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="..\bin"
+			OutputDirectory="..\bin\$(ConfigurationName)"
 			IntermediateDirectory="..\obj\setup\$(ConfigurationName)"
 			ConfigurationType="1"
 			CharacterSet="2"
@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories=".;..\src;..\textscreen"
+				AdditionalIncludeDirectories="..\..\SDL_mixer-1.2.12;..\..\SDL_net-1.2.8;..\..\SDL-1.2.15\include;.;..\src;..\textscreen"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;CHOCOLATESETUP"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -63,6 +63,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="SDL.lib SDLmain.lib SDL_net.lib"
 				OutputFile="$(OutDir)\chocolate-setup-dbg.exe"
+				AdditionalLibraryDirectories="&quot;..\..\SDL-1.2.15\VisualC\SDLmain\$(ConfigurationName)&quot;;&quot;..\..\SDL-1.2.15\VisualC\$(ConfigurationName)&quot;;&quot;..\..\SDL_net-1.2.8\VisualC\$(ConfigurationName)&quot;;&quot;..\..\SDL_mixer-1.2.12\VisualC\$(ConfigurationName)&quot;;&quot;..\lib\$(ConfigurationName)&quot;"
 				IgnoreDefaultLibraryNames="msvcrt"
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -92,7 +93,7 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="..\bin"
+			OutputDirectory="..\bin\$(ConfigurationName)"
 			IntermediateDirectory="..\obj\setup\$(ConfigurationName)"
 			ConfigurationType="1"
 			CharacterSet="2"
@@ -115,9 +116,8 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				Optimization="2"
-				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories=".;..\src;..\textscreen"
+				Optimization="3"
+				AdditionalIncludeDirectories="..\..\SDL_mixer-1.2.12;..\..\SDL_net-1.2.8;..\..\SDL-1.2.15\include;.;..\src;..\textscreen"
 				PreprocessorDefinitions="WIN32;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;CHOCOLATESETUP"
 				StringPooling="true"
 				ExceptionHandling="0"
@@ -141,9 +141,90 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="SDL.lib SDLmain.lib SDL_net.lib"
 				OutputFile="$(OutDir)\chocolate-setup.exe"
+				AdditionalLibraryDirectories="&quot;..\..\SDL-1.2.15\VisualC\SDLmain\$(ConfigurationName)&quot;;&quot;..\..\SDL-1.2.15\VisualC\$(ConfigurationName)&quot;;&quot;..\..\SDL_net-1.2.8\VisualC\$(ConfigurationName)&quot;;&quot;..\..\SDL_mixer-1.2.12\VisualC\$(ConfigurationName)&quot;;&quot;..\lib\$(ConfigurationName)&quot;"
 				IgnoreDefaultLibraryNames="msvcrtd"
 				GenerateDebugInformation="false"
-				SubSystem="1"
+				SubSystem="2"
+				OptimizeReferences="2"
+				EnableCOMDATFolding="2"
+				TargetMachine="1"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+			/>
+		</Configuration>
+		<Configuration
+			Name="Static|Win32"
+			OutputDirectory="..\bin\$(ConfigurationName)"
+			IntermediateDirectory="..\obj\setup\$(ConfigurationName)"
+			ConfigurationType="1"
+			CharacterSet="2"
+			WholeProgramOptimization="1"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				Optimization="3"
+				AdditionalIncludeDirectories="..\..\SDL_mixer-1.2.12;..\..\SDL_net-1.2.8;..\..\SDL-1.2.15\include;.;..\src;..\textscreen"
+				PreprocessorDefinitions="WIN32;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;CHOCOLATESETUP"
+				StringPooling="true"
+				ExceptionHandling="0"
+				RuntimeLibrary="0"
+				EnableFunctionLevelLinking="true"
+				WarningLevel="3"
+				DebugInformationFormat="0"
+				CompileAs="1"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="CHOCOLATESETUP"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="SDL.lib SDLmain.lib SDL_net.lib"
+				OutputFile="$(OutDir)\chocolate-setup.exe"
+				AdditionalLibraryDirectories="&quot;..\..\SDL-1.2.15\VisualC\SDLmain\$(ConfigurationName)&quot;;&quot;..\..\SDL-1.2.15\VisualC\$(ConfigurationName)&quot;;&quot;..\..\SDL_net-1.2.8\VisualC\$(ConfigurationName)&quot;;&quot;..\..\SDL_mixer-1.2.12\VisualC\$(ConfigurationName)&quot;;&quot;..\lib\$(ConfigurationName)&quot;"
+				IgnoreDefaultLibraryNames="msvcrtd"
+				GenerateDebugInformation="false"
+				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				TargetMachine="1"

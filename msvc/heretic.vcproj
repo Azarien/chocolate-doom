@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9.00"
+	Version="9,00"
 	Name="Heretic"
 	ProjectGUID="{8D4FF322-7414-4668-94BD-D63B45D9CBF8}"
 	RootNamespace="Heretic"
@@ -17,7 +17,7 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="..\bin"
+			OutputDirectory="..\bin\$(ConfigurationName)"
 			IntermediateDirectory="..\obj\heretic\$(ConfigurationName)"
 			ConfigurationType="1"
 			CharacterSet="2"
@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories=".;..\src;..\src\heretic;..\textscreen;..\pcsound;..\opl"
+				AdditionalIncludeDirectories="..\..\SDL_mixer-1.2.12;..\..\SDL_net-1.2.8;..\..\SDL-1.2.15\include;.;..\src;..\src\heretic;..\textscreen;..\pcsound;..\opl"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;PROGRAM_PREFIX=&quot;\&quot;chocolate-\&quot;&quot;"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -62,6 +62,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="SDL.lib SDL_mixer.lib SDL_net.lib SDLmain.lib"
 				OutputFile="$(OutDir)\chocolate-heretic-dbg.exe"
+				AdditionalLibraryDirectories="&quot;..\..\SDL-1.2.15\VisualC\SDLmain\$(ConfigurationName)&quot;;&quot;..\..\SDL-1.2.15\VisualC\$(ConfigurationName)&quot;;&quot;..\..\SDL_net-1.2.8\VisualC\$(ConfigurationName)&quot;;&quot;..\..\SDL_mixer-1.2.12\VisualC\$(ConfigurationName)&quot;;&quot;..\lib\$(ConfigurationName)&quot;"
 				IgnoreDefaultLibraryNames="msvcrt"
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -91,7 +92,7 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="..\bin"
+			OutputDirectory="..\bin\$(ConfigurationName)"
 			IntermediateDirectory="..\obj\heretic\$(ConfigurationName)"
 			ConfigurationType="1"
 			CharacterSet="2"
@@ -114,13 +115,9 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				Optimization="2"
-				InlineFunctionExpansion="2"
-				EnableIntrinsicFunctions="true"
-				FavorSizeOrSpeed="1"
-				OmitFramePointers="true"
+				Optimization="3"
 				WholeProgramOptimization="true"
-				AdditionalIncludeDirectories=".;..\src;..\src\heretic;..\textscreen;..\pcsound;..\opl"
+				AdditionalIncludeDirectories="..\..\SDL_mixer-1.2.12;..\..\SDL_net-1.2.8;..\..\SDL-1.2.15\include;.;..\src;..\src\heretic;..\textscreen;..\pcsound;..\opl"
 				PreprocessorDefinitions="WIN32;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;PROGRAM_PREFIX=&quot;\&quot;chocolate-\&quot;&quot;"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
@@ -143,10 +140,95 @@
 				AdditionalDependencies="SDL.lib SDL_mixer.lib SDL_net.lib SDLmain.lib"
 				OutputFile="$(OutDir)\chocolate-heretic.exe"
 				LinkIncremental="0"
+				AdditionalLibraryDirectories="&quot;..\..\SDL-1.2.15\VisualC\SDLmain\$(ConfigurationName)&quot;;&quot;..\..\SDL-1.2.15\VisualC\$(ConfigurationName)&quot;;&quot;..\..\SDL_net-1.2.8\VisualC\$(ConfigurationName)&quot;;&quot;..\..\SDL_mixer-1.2.12\VisualC\$(ConfigurationName)&quot;;&quot;..\lib\$(ConfigurationName)&quot;"
 				IgnoreDefaultLibraryNames="msvcrtd"
 				GenerateDebugInformation="false"
 				GenerateMapFile="true"
-				SubSystem="1"
+				SubSystem="2"
+				OptimizeReferences="2"
+				EnableCOMDATFolding="2"
+				LinkTimeCodeGeneration="1"
+				DataExecutionPrevention="0"
+				TurnOffAssemblyGeneration="false"
+				TargetMachine="1"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+			/>
+		</Configuration>
+		<Configuration
+			Name="Static|Win32"
+			OutputDirectory="..\bin\$(ConfigurationName)"
+			IntermediateDirectory="..\obj\heretic\$(ConfigurationName)"
+			ConfigurationType="1"
+			CharacterSet="2"
+			WholeProgramOptimization="1"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				Optimization="3"
+				WholeProgramOptimization="true"
+				AdditionalIncludeDirectories="..\..\SDL_mixer-1.2.12;..\..\SDL_net-1.2.8;..\..\SDL-1.2.15\include;.;..\src;..\src\heretic;..\textscreen;..\pcsound;..\opl"
+				PreprocessorDefinitions="WIN32;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;PROGRAM_PREFIX=&quot;\&quot;chocolate-\&quot;&quot;"
+				RuntimeLibrary="0"
+				EnableFunctionLevelLinking="true"
+				UsePrecompiledHeader="0"
+				WarningLevel="3"
+				DebugInformationFormat="0"
+				CompileAs="1"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="SDL.lib SDL_mixer.lib SDL_net.lib SDLmain.lib"
+				OutputFile="$(OutDir)\chocolate-heretic.exe"
+				LinkIncremental="0"
+				AdditionalLibraryDirectories="&quot;..\..\SDL-1.2.15\VisualC\SDLmain\$(ConfigurationName)&quot;;&quot;..\..\SDL-1.2.15\VisualC\$(ConfigurationName)&quot;;&quot;..\..\SDL_net-1.2.8\VisualC\$(ConfigurationName)&quot;;&quot;..\..\SDL_mixer-1.2.12\VisualC\$(ConfigurationName)&quot;;&quot;..\lib\$(ConfigurationName)&quot;"
+				IgnoreDefaultLibraryNames="msvcrtd"
+				GenerateDebugInformation="false"
+				GenerateMapFile="true"
+				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				LinkTimeCodeGeneration="1"
