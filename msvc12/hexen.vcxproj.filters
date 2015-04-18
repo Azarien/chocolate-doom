@@ -198,9 +198,6 @@
     <ClCompile Include="..\src\hexen\h2_main.c">
       <Filter>Source Files\hexen</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\hexen\i_sound.c">
-      <Filter>Source Files\hexen</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\hexen\in_lude.c">
       <Filter>Source Files\hexen</Filter>
     </ClCompile>

@@ -231,9 +231,6 @@
     <ClCompile Include="..\src\heretic\g_game.c">
       <Filter>Source Files\heretic</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\heretic\i_sound.c">
-      <Filter>Source Files\heretic</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\heretic\in_lude.c">
       <Filter>Source Files\heretic</Filter>
     </ClCompile>

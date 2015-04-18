@@ -173,7 +173,6 @@
     <ClCompile Include="..\src\heretic\g_game.c" />
     <ClCompile Include="..\src\heretic\info.c" />
     <ClCompile Include="..\src\heretic\in_lude.c" />
-    <ClCompile Include="..\src\heretic\i_sound.c" />
     <ClCompile Include="..\src\heretic\mn_menu.c" />
     <ClCompile Include="..\src\heretic\m_random.c" />
     <ClCompile Include="..\src\heretic\p_ceilng.c" />
