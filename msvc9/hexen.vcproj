@@ -520,10 +520,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\src\hexen\m_misc.c"
-					>
-				</File>
-				<File
 					RelativePath="..\src\hexen\m_random.c"
 					>
 				</File>
