@@ -165,7 +165,6 @@
     <ClCompile Include="..\src\hexen\info.c" />
     <ClCompile Include="..\src\hexen\in_lude.c" />
     <ClCompile Include="..\src\hexen\mn_menu.c" />
-    <ClCompile Include="..\src\hexen\m_misc.c" />
     <ClCompile Include="..\src\hexen\m_random.c" />
     <ClCompile Include="..\src\hexen\po_man.c" />
     <ClCompile Include="..\src\hexen\p_acs.c" />

@@ -204,9 +204,6 @@
     <ClCompile Include="..\src\hexen\info.c">
       <Filter>Source Files\hexen</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\hexen\m_misc.c">
-      <Filter>Source Files\hexen</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\hexen\m_random.c">
       <Filter>Source Files\hexen</Filter>
     </ClCompile>
