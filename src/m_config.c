@@ -817,6 +817,13 @@ static default_t extra_defaults_list[] =
     CONFIG_VARIABLE_STRING(snd_musiccmd),
 
     //!
+    // Value to set for the DMXOPTION environment variable. If this contains
+    // "-opl3", output for an OPL3 chip is generated when in OPL MIDI
+    // playback mode.
+    //
+    CONFIG_VARIABLE_STRING(snd_dmxoption),
+
+    //!
     // The I/O port to use to access the OPL chip.  Only relevant when
     // using native OPL music playback.
     //

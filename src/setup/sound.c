@@ -61,6 +61,19 @@ static char *musicmode_strings[] =
     "CD audio"
 };
 
+typedef enum
+{
+    OPLMODE_OPL2,
+    OPLMODE_OPL3,
+    NUM_OPLMODES,
+} oplmode_t;
+
+static char *opltype_strings[] =
+{
+    "OPL2",
+    "OPL3"
+};
+
 static char *cfg_extension[] = { "cfg", NULL };
 
 // Config file variables:
@@ -81,6 +94,7 @@ static int show_talk = 0;
 static int use_libsamplerate = 0;
 static float libsamplerate_scale = 0.65;
 
+static char *snd_dmxoption = "";
 static char *timidity_cfg_path = NULL;
 static char *gus_patch_path = NULL;
 static int gus_ram_kb = 1024;
@@ -98,6 +112,7 @@ static int snd_mport = 0;
 
 static int snd_sfxmode;
 static int snd_musicmode;
+static int snd_oplmode;
 
 static void UpdateSndDevices(TXT_UNCAST_ARG(widget), TXT_UNCAST_ARG(data))
 {
@@ -132,6 +147,38 @@ static void UpdateSndDevices(TXT_UNCAST_ARG(widget), TXT_UNCAST_ARG(data))
             snd_musicdevice = SNDDEVICE_CD;
             break;
     }
+
+    switch (snd_oplmode)
+    {
+        default:
+        case OPLMODE_OPL2:
+            snd_dmxoption = "";
+            break;
+
+        case OPLMODE_OPL3:
+            snd_dmxoption = "-opl3";
+            break;
+    }
+}
+
+static txt_dropdown_list_t *OPLTypeSelector(void)
+{
+    txt_dropdown_list_t *result;
+
+    if (snd_dmxoption != NULL && strstr(snd_dmxoption, "-opl3") != NULL)
+    {
+        snd_oplmode = OPLMODE_OPL3;
+    }
+    else
+    {
+        snd_oplmode = OPLMODE_OPL2;
+    }
+
+    result = TXT_NewDropdownList(&snd_oplmode, opltype_strings, 2);
+
+    TXT_SignalConnect(result, "changed", UpdateSndDevices, NULL);
+
+    return result;
 }
 
 static void UpdateExtraTable(TXT_UNCAST_ARG(widget),
@@ -139,29 +186,36 @@ static void UpdateExtraTable(TXT_UNCAST_ARG(widget),
 {
     TXT_CAST_ARG(txt_table_t, extra_table);
 
-    // Rebuild the GUS table. Start by emptying it, then only add the
-    // GUS control widget if we are in GUS music mode.
-
-    TXT_ClearTable(extra_table);
-
-    if (snd_musicmode == MUSICMODE_GUS)
+    switch (snd_musicmode)
     {
+    case MUSICMODE_OPL:
+        TXT_InitTable(extra_table, 2);
+        TXT_SetColumnWidths(extra_table, 19, 4);
         TXT_AddWidgets(extra_table,
-                       TXT_NewLabel("GUS patch path:"),
-                       TXT_NewFileSelector(&gus_patch_path, 30,
-                                           "Select path to GUS patches",
-                                           TXT_DIRECTORY),
-                       NULL);
-    }
+                        TXT_NewLabel("OPL type"),
+                        OPLTypeSelector(),
+                        NULL);
+        break;
 
-    if (snd_musicmode == MUSICMODE_NATIVE)
-    {
+    case MUSICMODE_GUS:
+        TXT_InitTable(extra_table, 1);
         TXT_AddWidgets(extra_table,
-                       TXT_NewLabel("Timidity configuration file:"),
-                       TXT_NewFileSelector(&timidity_cfg_path, 30,
-                                           "Select Timidity config file",
-                                           cfg_extension),
-                       NULL);
+                        TXT_NewLabel("GUS patch path:"),
+                        TXT_NewFileSelector(&gus_patch_path, 30,
+                                            "Select path to GUS patches",
+                                            TXT_DIRECTORY),
+                        NULL);
+        break;
+
+    case MUSICMODE_NATIVE:
+        TXT_InitTable(extra_table, 1);
+        TXT_AddWidgets(extra_table,
+                        TXT_NewLabel("Timidity configuration file:"),
+                        TXT_NewFileSelector(&timidity_cfg_path, 30,
+                                            "Select Timidity config file",
+                                            cfg_extension),
+                        NULL);
+        break;
     }
 }
 
@@ -321,6 +375,7 @@ void BindSoundVariables(void)
     M_BindIntVariable("snd_mport",                &snd_mport);
     M_BindIntVariable("snd_maxslicetime_ms",      &snd_maxslicetime_ms);
     M_BindStringVariable("snd_musiccmd",          &snd_musiccmd);
+    M_BindStringVariable("snd_dmxoption",         &snd_dmxoption);
 
     M_BindIntVariable("snd_cachesize",            &snd_cachesize);
     M_BindIntVariable("opl_io_port",              &opl_io_port);
