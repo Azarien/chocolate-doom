@@ -508,10 +508,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\src\hexen\i_sound.c"
-					>
-				</File>
-				<File
 					RelativePath="..\src\hexen\in_lude.c"
 					>
 				</File>
