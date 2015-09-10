@@ -7,3 +7,5 @@ strfsav*
 *.pcx
 *.sdf
 /*.opensdf
+/*.WAD
+/hexndata

@@ -19,6 +19,7 @@
     <ProjectGuid>{FC4DACBA-2A3E-4AF0-804A-AF5FFFD13B08}</ProjectGuid>
     <RootNamespace>Strife</RootNamespace>
     <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Static|Win32'" Label="Configuration">
@@ -58,16 +59,19 @@
     <OutDir>..\bin\$(Configuration)\</OutDir>
     <IntDir>..\obj\strife\$(Configuration)\</IntDir>
     <LinkIncremental>true</LinkIncremental>
+    <TargetName>chocolate-strife-dbg</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>..\bin\$(Configuration)\</OutDir>
     <IntDir>..\obj\strife\$(Configuration)\</IntDir>
     <LinkIncremental />
+    <TargetName>chocolate-strife</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Static|Win32'">
     <OutDir>..\bin\$(Configuration)\</OutDir>
     <IntDir>..\obj\strife\$(Configuration)\</IntDir>
     <LinkIncremental />
+    <TargetName>chocolate-strife</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -89,7 +93,6 @@
     <Link>
       <PerUserRedirection>false</PerUserRedirection>
       <AdditionalDependencies>SDL.lib;SDL_mixer.lib;SDL_net.lib;SDLmain.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)chocolate-strife-dbg.exe</OutputFile>
       <AdditionalLibraryDirectories>..\..\SDL-1.2.15\VisualC\SDLmain\$(Configuration);..\..\SDL-1.2.15\VisualC\$(Configuration);..\..\SDL_net-1.2.8\VisualC\$(Configuration);..\..\SDL_mixer-1.2.12\VisualC\$(Configuration);..\lib\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>msvcrt;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -114,7 +117,6 @@
     <Link>
       <PerUserRedirection>false</PerUserRedirection>
       <AdditionalDependencies>SDL.lib;SDL_mixer.lib;SDL_net.lib;SDLmain.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)chocolate-strife.exe</OutputFile>
       <AdditionalLibraryDirectories>..\..\SDL-1.2.15\VisualC\SDLmain\$(Configuration);..\..\SDL-1.2.15\VisualC\$(Configuration);..\..\SDL_net-1.2.8\VisualC\$(Configuration);..\..\SDL_mixer-1.2.12\VisualC\$(Configuration);..\lib\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>msvcrtd;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>false</GenerateDebugInformation>
@@ -144,7 +146,6 @@
     <Link>
       <PerUserRedirection>false</PerUserRedirection>
       <AdditionalDependencies>SDL.lib;SDL_mixer.lib;SDL_net.lib;SDLmain.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)chocolate-strife.exe</OutputFile>
       <AdditionalLibraryDirectories>..\..\SDL-1.2.15\VisualC\SDLmain\$(Configuration);..\..\SDL-1.2.15\VisualC\$(Configuration);..\..\SDL_net-1.2.8\VisualC\$(Configuration);..\..\SDL_mixer-1.2.12\VisualC\$(Configuration);..\lib\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>msvcrtd;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>false</GenerateDebugInformation>
