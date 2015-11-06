@@ -465,6 +465,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\v_diskicon.h"
+				>
+			</File>
+			<File
 				RelativePath="..\src\v_patch.h"
 				>
 			</File>
@@ -878,6 +882,10 @@
 			</File>
 			<File
 				RelativePath="..\src\tables.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\v_diskicon.c"
 				>
 			</File>
 			<File
