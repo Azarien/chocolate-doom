@@ -324,6 +324,9 @@
     <ClInclude Include="..\src\doom\wi_stuff.h">
       <Filter>Header Files\doom</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\v_diskicon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\d_event.c">
@@ -670,6 +673,9 @@
     </ClCompile>
     <ClCompile Include="..\src\doom\wi_stuff.c">
       <Filter>Source Files\doom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\v_diskicon.c">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

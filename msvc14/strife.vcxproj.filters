@@ -339,6 +339,9 @@
     <ClInclude Include="..\src\strife\wi_stuff.h">
       <Filter>Header Files\strife</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\v_diskicon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\aes_prng.c">
@@ -691,6 +694,9 @@
     </ClCompile>
     <ClCompile Include="..\src\strife\wi_stuff.c">
       <Filter>Source Files\strife</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\v_diskicon.c">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

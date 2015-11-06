@@ -260,6 +260,7 @@
     <ClInclude Include="..\src\net_structrw.h" />
     <ClInclude Include="..\src\sha1.h" />
     <ClInclude Include="..\src\tables.h" />
+    <ClInclude Include="..\src\v_diskicon.h" />
     <ClInclude Include="..\src\v_patch.h" />
     <ClInclude Include="..\src\v_video.h" />
     <ClInclude Include="..\src\w_checksum.h" />
@@ -375,6 +376,7 @@
     <ClCompile Include="..\src\net_structrw.c" />
     <ClCompile Include="..\src\sha1.c" />
     <ClCompile Include="..\src\tables.c" />
+    <ClCompile Include="..\src\v_diskicon.c" />
     <ClCompile Include="..\src\v_video.c" />
     <ClCompile Include="..\src\w_checksum.c" />
     <ClCompile Include="..\src\w_file.c" />

@@ -258,6 +258,7 @@
     <ClInclude Include="..\src\strife\s_sound.h" />
     <ClInclude Include="..\src\strife\wi_stuff.h" />
     <ClInclude Include="..\src\tables.h" />
+    <ClInclude Include="..\src\v_diskicon.h" />
     <ClInclude Include="..\src\v_patch.h" />
     <ClInclude Include="..\src\v_video.h" />
     <ClInclude Include="..\src\w_checksum.h" />
@@ -375,6 +376,7 @@
     <ClCompile Include="..\src\strife\s_sound.c" />
     <ClCompile Include="..\src\strife\wi_stuff.c" />
     <ClCompile Include="..\src\tables.c" />
+    <ClCompile Include="..\src\v_diskicon.c" />
     <ClCompile Include="..\src\v_video.c" />
     <ClCompile Include="..\src\w_checksum.c" />
     <ClCompile Include="..\src\w_file.c" />

@@ -318,6 +318,9 @@
     <ClCompile Include="..\src\hexen\sv_save.c">
       <Filter>Source Files\hexen</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\v_diskicon.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\d_event.h">
@@ -505,6 +508,9 @@
     </ClInclude>
     <ClInclude Include="..\src\hexen\xddefs.h">
       <Filter>Header Files\hexen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\v_diskicon.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

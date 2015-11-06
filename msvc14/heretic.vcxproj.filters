@@ -330,6 +330,9 @@
     <ClCompile Include="..\src\heretic\sounds.c">
       <Filter>Source Files\heretic</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\v_diskicon.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\d_event.h">
@@ -538,6 +541,9 @@
     </ClInclude>
     <ClInclude Include="..\src\heretic\sounds.h">
       <Filter>Header Files\heretic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\v_diskicon.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
