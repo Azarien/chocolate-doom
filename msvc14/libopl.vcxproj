@@ -123,7 +123,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\opl\dbopl.c" />
+    <ClCompile Include="..\opl\opl3.c" />
     <ClCompile Include="..\opl\ioperm_sys.c" />
     <ClCompile Include="..\opl\opl.c" />
     <ClCompile Include="..\opl\opl_linux.c" />
@@ -134,7 +134,7 @@
     <ClCompile Include="..\opl\opl_win32.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\opl\dbopl.h" />
+    <ClInclude Include="..\opl\opl3.h" />
     <ClInclude Include="..\opl\ioperm_sys.h" />
     <ClInclude Include="..\opl\opl.h" />
     <ClInclude Include="..\opl\opl_internal.h" />

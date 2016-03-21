@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\opl\dbopl.c">
+    <ClCompile Include="..\opl\opl3.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\opl\ioperm_sys.c">
@@ -44,7 +44,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\opl\dbopl.h">
+    <ClInclude Include="..\opl\opl3.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\opl\ioperm_sys.h">
