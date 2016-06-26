@@ -581,7 +581,7 @@ void D_DoAdvanceDemo (void)
 	{
 	    pagetic = 200;
 
-	    if ( gamemode == retail )
+	    if (gameversion >= exe_ultimate)
 	      pagename = DEH_String("CREDIT");
 	    else
 	      pagename = DEH_String("HELP2");
@@ -813,6 +813,7 @@ void D_IdentifyVersion(void)
         // with Freedoom and get the right level names.
 
         //!
+        // @category compat
         // @arg <pack>
         //
         // Explicitly specify a Doom II "mission pack" to run as, instead of
