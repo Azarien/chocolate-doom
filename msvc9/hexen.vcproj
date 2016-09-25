@@ -66,6 +66,7 @@
 				IgnoreAllDefaultLibraries="false"
 				IgnoreDefaultLibraryNames=""
 				GenerateDebugInformation="true"
+				GenerateMapFile="true"
 				SubSystem="1"
 				TargetMachine="1"
 			/>
