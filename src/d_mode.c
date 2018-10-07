@@ -182,7 +182,7 @@ boolean D_IsEpisodeMap(GameMission_t mission)
     }
 }
 
-char *D_GameMissionString(GameMission_t mission)
+const char *D_GameMissionString(GameMission_t mission)
 {
     switch (mission)
     {
@@ -207,6 +207,24 @@ char *D_GameMissionString(GameMission_t mission)
             return "hexen";
         case strife:
             return "strife";
+    }
+}
+
+const char *D_GameModeString(GameMode_t mode)
+{
+    switch (mode)
+    {
+        case shareware:
+            return "shareware";
+        case registered:
+            return "registered";
+        case commercial:
+            return "commercial";
+        case retail:
+            return "retail";
+        case indetermined:
+        default:
+            return "unknown";
     }
 }
 

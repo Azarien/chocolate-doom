@@ -22,6 +22,7 @@
 
 #include "doomtype.h"
 #include "i_swap.h"
+#include "i_system.h"
 #include "midifile.h"
 
 #define HEADER_CHUNK_ID "MThd"
@@ -86,7 +87,7 @@ struct midi_file_s
 // Check the header of a chunk:
 
 static boolean CheckChunkHeader(chunk_header_t *chunk,
-                                char *expected_id)
+                                const char *expected_id)
 {
     boolean result;
     
@@ -456,14 +457,8 @@ static boolean ReadTrack(midi_track_t *track, FILE *stream)
     {
         // Resize the track slightly larger to hold another event:
 
-        new_events = realloc(track->events, 
+        new_events = I_Realloc(track->events, 
                              sizeof(midi_event_t) * (track->num_events + 1));
-
-        if (new_events == NULL)
-        {
-            return false;
-        }
-
         track->events = new_events;
 
         // Read the next event:

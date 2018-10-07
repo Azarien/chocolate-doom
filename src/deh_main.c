@@ -368,7 +368,7 @@ static void DEH_ParseContext(deh_context_t *context)
 
 // Parses a dehacked file
 
-int DEH_LoadFile(char *filename)
+int DEH_LoadFile(const char *filename)
 {
     deh_context_t *context;
 
@@ -445,7 +445,7 @@ int DEH_LoadLump(int lumpnum, boolean allow_long, boolean allow_error)
     return 1;
 }
 
-int DEH_LoadLumpByName(char *name, boolean allow_long, boolean allow_error)
+int DEH_LoadLumpByName(const char *name, boolean allow_long, boolean allow_error)
 {
     int lumpnum;
 
@@ -483,6 +483,7 @@ void DEH_ParseCommandLine(void)
         {
             filename = D_TryFindWADByName(myargv[p]);
             DEH_LoadFile(filename);
+            free(filename);
             ++p;
         }
     }

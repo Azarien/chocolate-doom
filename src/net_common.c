@@ -16,9 +16,11 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "doomtype.h"
 #include "d_mode.h"
+#include "i_system.h"
 #include "i_timer.h"
 
 #include "net_common.h"
@@ -36,7 +38,7 @@
 
 // reliable packet that is guaranteed to reach its destination
 
-struct net_reliable_packet_s 
+struct net_reliable_packet_s
 {
     net_packet_t *packet;
     int last_send_time;
@@ -44,30 +46,38 @@ struct net_reliable_packet_s
     net_reliable_packet_t *next;
 };
 
-static void NET_Conn_Init(net_connection_t *conn, net_addr_t *addr)
+// Why did the server reject us?
+char *net_client_reject_reason = NULL;
+
+static void NET_Conn_Init(net_connection_t *conn, net_addr_t *addr,
+                          net_protocol_t protocol)
 {
     conn->last_send_time = -1;
     conn->num_retries = 0;
     conn->addr = addr;
+    conn->protocol = protocol;
     conn->reliable_packets = NULL;
     conn->reliable_send_seq = 0;
     conn->reliable_recv_seq = 0;
+    conn->keepalive_recv_time = I_GetTimeMS();
 }
 
 // Initialize as a client connection
 
-void NET_Conn_InitClient(net_connection_t *conn, net_addr_t *addr)
+void NET_Conn_InitClient(net_connection_t *conn, net_addr_t *addr,
+                         net_protocol_t protocol)
 {
-    NET_Conn_Init(conn, addr);
+    NET_Conn_Init(conn, addr, protocol);
     conn->state = NET_CONN_STATE_CONNECTING;
 }
 
 // Initialize as a server connection
 
-void NET_Conn_InitServer(net_connection_t *conn, net_addr_t *addr)
+void NET_Conn_InitServer(net_connection_t *conn, net_addr_t *addr,
+                         net_protocol_t protocol)
 {
-    NET_Conn_Init(conn, addr);
-    conn->state = NET_CONN_STATE_WAITING_ACK;
+    NET_Conn_Init(conn, addr, protocol);
+    conn->state = NET_CONN_STATE_CONNECTED;
 }
 
 // Send a packet to a connection
@@ -78,38 +88,6 @@ void NET_Conn_SendPacket(net_connection_t *conn, net_packet_t *packet)
 {
     conn->keepalive_send_time = I_GetTimeMS();
     NET_SendPacket(conn->addr, packet);
-}
-
-// parse an ACK packet from a client
-
-static void NET_Conn_ParseACK(net_connection_t *conn, net_packet_t *packet)
-{
-    net_packet_t *reply;
-
-    if (conn->state == NET_CONN_STATE_CONNECTING)
-    {
-        // We are a client
-
-        // received a response from the server to our SYN
-
-        conn->state = NET_CONN_STATE_CONNECTED;
-
-        // We must send an ACK reply to the server's ACK
-
-        reply = NET_NewPacket(10);
-        NET_WriteInt16(reply, NET_PACKET_TYPE_ACK);
-        NET_Conn_SendPacket(conn, reply);
-        NET_FreePacket(reply);
-    }
-    
-    if (conn->state == NET_CONN_STATE_WAITING_ACK)
-    {
-        // We are a server
-
-        // Client is connected
-        
-        conn->state = NET_CONN_STATE_CONNECTED;
-    }
 }
 
 static void NET_Conn_ParseDisconnect(net_connection_t *conn, net_packet_t *packet)
@@ -151,7 +129,7 @@ static void NET_Conn_ParseReject(net_connection_t *conn, net_packet_t *packet)
 {
     char *msg;
 
-    msg = NET_ReadString(packet);
+    msg = NET_ReadSafeString(packet);
 
     if (msg == NULL)
     {
@@ -165,8 +143,8 @@ static void NET_Conn_ParseReject(net_connection_t *conn, net_packet_t *packet)
         conn->state = NET_CONN_STATE_DISCONNECTED;
         conn->disconnect_reason = NET_DISCONNECT_REMOTE;
 
-        printf("Rejected by server: ");
-        NET_SafePuts(msg);
+        free(net_client_reject_reason);
+        net_client_reject_reason = strdup(msg);
     }
 }
 
@@ -282,9 +260,6 @@ boolean NET_Conn_Packet(net_connection_t *conn, net_packet_t *packet,
     
     switch (*packet_type)
     {
-        case NET_PACKET_TYPE_ACK:
-            NET_Conn_ParseACK(conn, packet);
-            break;
         case NET_PACKET_TYPE_DISCONNECT:
             NET_Conn_ParseDisconnect(conn, packet);
             break;
@@ -368,35 +343,6 @@ void NET_Conn_Run(net_connection_t *conn)
 
             NET_Conn_SendPacket(conn, conn->reliable_packets->packet);
             conn->reliable_packets->last_send_time = nowtime;
-        }
-    }
-    else if (conn->state == NET_CONN_STATE_WAITING_ACK)
-    {
-        if (conn->last_send_time < 0
-         || nowtime - conn->last_send_time > 1000)
-        {
-            // it has been a second since the last ACK was sent, and 
-            // still no reply.
-
-            if (conn->num_retries < MAX_RETRIES)
-            {
-                // send another ACK
-
-                packet = NET_NewPacket(10);
-                NET_WriteInt16(packet, NET_PACKET_TYPE_ACK);
-                NET_Conn_SendPacket(conn, packet);
-                NET_FreePacket(packet);
-                conn->last_send_time = nowtime;
-
-                ++conn->num_retries;
-            }
-            else 
-            {
-                // no more retries allowed.
-
-                conn->state = NET_CONN_STATE_DISCONNECTED;
-                conn->disconnect_reason = NET_DISCONNECT_TIMEOUT;
-            }
         }
     }
     else if (conn->state == NET_CONN_STATE_DISCONNECTING)

@@ -38,6 +38,9 @@ Variables should be named like this: `my_variable_name`, not like this:
 `MyVariableName`.  In pointer variable declarations, place the `*` next
 to the variable name, not the type.
 
+When casting variables from one type to another, put a space after the
+last closing brace.
+
 When using an if, do, while, or for statement, always use the { } braces
 even when they are not necessary.  For example, do this:
 
@@ -139,6 +142,7 @@ Unsafe function   |   Safer alternative
 `strcat()`        |  `M_StringConcat()`
 `strncat()`       |  `M_StringConcat()`
 `strdup()`        |  `M_StringDuplicate()`
+`realloc()`       |  `I_Realloc()`
 
 Lots of the code includes calls to DEH_String() to simulate string
 replacement by the Dehacked tool. Be careful when using Dehacked

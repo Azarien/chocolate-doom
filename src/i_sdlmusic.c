@@ -25,6 +25,8 @@
 #include "SDL.h"
 #include "SDL_mixer.h"
 
+#include "i_midipipe.h"
+
 #include "config.h"
 #include "doomtype.h"
 #include "memio.h"
@@ -111,6 +113,7 @@ static boolean sdl_was_initialized = false;
 static boolean musicpaused = false;
 static int current_music_volume;
 
+char *music_pack_path = "";
 char *timidity_cfg_path = "";
 
 static char *temp_timidity_cfg = NULL;
@@ -378,7 +381,7 @@ static void ReadLoopPoints(char *filename, file_metadata_t *metadata)
     metadata->start_time = 0;
     metadata->end_time = -1;
 
-    fs = fopen(filename, "r");
+    fs = fopen(filename, "rb");
 
     if (fs == NULL)
     {
@@ -469,7 +472,7 @@ static void AddSubstituteMusic(subst_music_t *subst)
 {
     ++subst_music_len;
     subst_music =
-        realloc(subst_music, sizeof(subst_music_t) * subst_music_len);
+        I_Realloc(subst_music, sizeof(subst_music_t) * subst_music_len);
     memcpy(&subst_music[subst_music_len - 1], subst, sizeof(subst_music_t));
 }
 
@@ -494,7 +497,6 @@ static int ParseHexDigit(char c)
 static char *GetFullPath(char *base_filename, char *path)
 {
     char *basedir, *result;
-    char *p;
 
     // Starting with directory separator means we have an absolute path,
     // so just return it.
@@ -518,17 +520,8 @@ static char *GetFullPath(char *base_filename, char *path)
 
     // Copy config filename and cut off the filename to just get the
     // parent dir.
-    basedir = M_StringDuplicate(base_filename);
-    p = strrchr(basedir, DIR_SEPARATOR);
-    if (p != NULL)
-    {
-        p[1] = '\0';
-        result = M_StringJoin(basedir, path, NULL);
-    }
-    else
-    {
-        result = M_StringDuplicate(path);
-    }
+    basedir = M_DirName(base_filename);
+    result = M_StringJoin(basedir, DIR_SEPARATOR_S, path, NULL);
     free(basedir);
     free(path);
 
@@ -629,25 +622,38 @@ static char *ParseSubstituteLine(char *filename, char *line)
 
 static boolean ReadSubstituteConfig(char *filename)
 {
-    char line[128];
-    FILE *fs;
-    char *error;
+    char *buffer;
+    char *line;
     int linenum = 1;
-//    int old_subst_music_len;
 
-    fs = fopen(filename, "r");
-
-    if (fs == NULL)
+    // This unnecessarily opens the file twice...
+    if (!M_FileExists(filename))
     {
         return false;
     }
 
-//    old_subst_music_len = subst_music_len;
+    M_ReadFile(filename, (byte **) &buffer);
 
-    while (!feof(fs))
+    line = buffer;
+
+    while (line != NULL)
     {
-        M_StringCopy(line, "", sizeof(line));
-        fgets(line, sizeof(line), fs);
+        char *error;
+        char *next;
+
+        // find end of line
+        char *eol = strchr(line, '\n');
+        if (eol != NULL)
+        {
+            // change the newline into NUL
+            *eol = '\0';
+            next = eol + 1;
+        }
+        else
+        {
+            // end of buffer
+            next = NULL;
+        }
 
         error = ParseSubstituteLine(filename, line);
 
@@ -657,9 +663,10 @@ static boolean ReadSubstituteConfig(char *filename)
         }
 
         ++linenum;
+        line = next;
     }
 
-    fclose(fs);
+    Z_Free(buffer);
 
     return true;
 }
@@ -672,7 +679,14 @@ static void LoadSubstituteConfigs(void)
     char *path;
     unsigned int i;
 
-    if (!strcmp(configdir, ""))
+    // We can configure the path to music packs using the music_pack_path
+    // configuration variable. Otherwise we use the current directory, or
+    // $configdir/music to look for .cfg files.
+    if (strcmp(music_pack_path, "") != 0)
+    {
+        musicdir = M_StringJoin(music_pack_path, DIR_SEPARATOR_S, NULL);
+    }
+    else if (!strcmp(configdir, ""))
     {
         musicdir = M_StringDuplicate("");
     }
@@ -790,7 +804,7 @@ static void DumpSubstituteConfig(char *filename)
 
 static boolean WriteWrapperTimidityConfig(char *write_path)
 {
-    char *p, *path;
+    char *path;
     FILE *fstream;
 
     if (!strcmp(timidity_cfg_path, ""))
@@ -805,14 +819,9 @@ static boolean WriteWrapperTimidityConfig(char *write_path)
         return false;
     }
 
-    p = strrchr(timidity_cfg_path, DIR_SEPARATOR);
-    if (p != NULL)
-    {
-        path = M_StringDuplicate(timidity_cfg_path);
-        path[p - timidity_cfg_path] = '\0';
-        fprintf(fstream, "dir %s\n", path);
-        free(path);
-    }
+    path = M_DirName(timidity_cfg_path);
+    fprintf(fstream, "dir %s\n", path);
+    free(path);
 
     fprintf(fstream, "source %s\n", timidity_cfg_path);
     fclose(fstream);
@@ -868,6 +877,9 @@ static void I_SDL_ShutdownMusic(void)
 {
     if (music_initialized)
     {
+#if defined(_WIN32)
+        I_MidiPipe_ShutdownServer();
+#endif
         Mix_HaltMusic();
         music_initialized = false;
 
@@ -900,28 +912,8 @@ static boolean I_SDL_InitMusic(void)
 {
     int i;
 
-    // SDL_mixer prior to v1.2.11 has a bug that causes crashes
-    // with MIDI playback.  Print a warning message if we are
-    // using an old version.
-
-#ifdef __MACOSX__
-    {
-        const SDL_version *v = Mix_Linked_Version();
-
-        if (SDL_VERSIONNUM(v->major, v->minor, v->patch)
-          < SDL_VERSIONNUM(1, 2, 11))
-        {
-            printf("\n"
-               "                   *** WARNING ***\n"
-               "      You are using an old version of SDL_mixer.\n"
-               "      Music playback on this version may cause crashes\n"
-               "      under OS X and is disabled by default.\n"
-               "\n");
-        }
-    }
-#endif
-
     //!
+    // @category obscure
     // @arg <filename>
     //
     // Read all MIDI files from loaded WAD files, dump an example substitution
@@ -985,6 +977,11 @@ static boolean I_SDL_InitMusic(void)
         LoadSubstituteConfigs();
     }
 
+#if defined(_WIN32)
+    // [AM] Start up midiproc to handle playing MIDI music.
+    I_MidiPipe_InitServer();
+#endif
+
     return music_initialized;
 }
 
@@ -1006,6 +1003,9 @@ static void UpdateMusicVolume(void)
         vol = (current_music_volume * MIX_MAX_VOLUME) / 127;
     }
 
+#if defined(_WIN32)
+    I_MidiPipe_SetVolume(vol);
+#endif
     Mix_VolumeMusic(vol);
 }
 
@@ -1030,7 +1030,7 @@ static void I_SDL_PlaySong(void *handle, boolean looping)
         return;
     }
 
-    if (handle == NULL)
+    if (handle == NULL && !midi_server_registered)
     {
         return;
     }
@@ -1057,7 +1057,16 @@ static void I_SDL_PlaySong(void *handle, boolean looping)
         SDL_UnlockAudio();
     }
 
-    Mix_PlayMusic(current_track_music, loops);
+#if defined(_WIN32)
+    if (midi_server_registered)
+    {
+        I_MidiPipe_PlaySong(loops);
+    }
+    else
+#endif
+    {
+        Mix_PlayMusic(current_track_music, loops);
+    }
 }
 
 static void I_SDL_PauseSong(void)
@@ -1091,7 +1100,17 @@ static void I_SDL_StopSong(void)
         return;
     }
 
-    Mix_HaltMusic();
+#if defined(_WIN32)
+    if (midi_server_registered)
+    {
+        I_MidiPipe_StopSong();
+    }
+    else
+#endif
+    {
+        Mix_HaltMusic();
+    }
+
     playing_substitute = false;
     current_track_music = NULL;
 }
@@ -1202,23 +1221,37 @@ static void *I_SDL_RegisterSong(void *data, int len)
     // by now, but Mix_SetMusicCMD() only works with Mix_LoadMUS(), so
     // we have to generate a temporary file.
 
-    music = Mix_LoadMUS(filename);
-
-    if (music == NULL)
+#if defined(_WIN32)
+    // [AM] If we do not have an external music command defined, play
+    //      music with the MIDI server.
+    if (midi_server_initialized)
     {
-        // Failed to load
-
-        fprintf(stderr, "Error loading midi: %s\n", Mix_GetError());
+        music = NULL;
+        if (!I_MidiPipe_RegisterSong(filename))
+        {
+            fprintf(stderr, "Error loading midi: %s\n",
+                "Could not communicate with midiproc.");
+        }
     }
-
-    // Remove the temporary MIDI file; however, when using an external
-    // MIDI program we can't delete the file. Otherwise, the program
-    // won't find the file to play. This means we leave a mess on
-    // disk :(
-
-    if (strlen(snd_musiccmd) == 0)
+    else
+#endif
     {
-        remove(filename);
+        music = Mix_LoadMUS(filename);
+        if (music == NULL)
+        {
+            // Failed to load
+            fprintf(stderr, "Error loading midi: %s\n", Mix_GetError());
+        }
+
+        // Remove the temporary MIDI file; however, when using an external
+        // MIDI program we can't delete the file. Otherwise, the program
+        // won't find the file to play. This means we leave a mess on
+        // disk :(
+
+        if (strlen(snd_musiccmd) == 0)
+        {
+            remove(filename);
+        }
     }
 
     free(filename);

@@ -202,7 +202,7 @@ static query_target_t *GetTargetForAddr(net_addr_t *addr, boolean create)
         return NULL;
     }
 
-    targets = realloc(targets, sizeof(query_target_t) * (num_targets + 1));
+    targets = I_Realloc(targets, sizeof(query_target_t) * (num_targets + 1));
 
     target = &targets[num_targets];
     target->type = QUERY_TARGET_SERVER;
@@ -642,6 +642,7 @@ int NET_StartMasterQuery(void)
 
 // -----------------------------------------------------------------------
 
+static void formatted_printf(int wide, char *s, ...) PRINTF_ATTR(2, 3);
 static void formatted_printf(int wide, char *s, ...)
 {
     va_list args;
@@ -723,9 +724,9 @@ static void NET_QueryPrintCallback(net_addr_t *addr,
     }
 
     formatted_printf(5, "%4i", ping_time);
-    formatted_printf(18, "%s: ", NET_AddrToString(addr));
-    formatted_printf(8, "%i/%i", data->num_players, 
-                                 data->max_players);
+    formatted_printf(22, "%s", NET_AddrToString(addr));
+    formatted_printf(4, "%i/%i ", data->num_players,
+                                  data->max_players);
 
     if (data->gamemode != indetermined)
     {
@@ -738,7 +739,7 @@ static void NET_QueryPrintCallback(net_addr_t *addr,
         printf("(game running) ");
     }
 
-    NET_SafePuts(data->description);
+    printf("%s\n", data->description);
 }
 
 void NET_LANQuery(void)

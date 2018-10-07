@@ -37,6 +37,7 @@
 #include "m_random.h"
 #include "i_system.h"
 #include "i_timer.h"
+#include "i_input.h"
 #include "i_video.h"
 
 #include "p_setup.h"
@@ -617,7 +618,7 @@ void G_DoLoadLevel (void)
     if ((gamemode == commercial)
      && (gameversion == exe_final2 || gameversion == exe_chex))
     {
-        char *skytexturename;
+        const char *skytexturename;
 
         if (gamemap < 12)
         {
@@ -1455,15 +1456,30 @@ void G_DoCompleted (void)
     wminfo.maxsecret = totalsecret; 
     wminfo.maxfrags = 0; 
 
-    // Set par time. Doom episode 4 doesn't have a par time, so this
-    // overflows into the cpars array. It's necessary to emulate this
-    // for statcheck regression testing.
+    // Set par time. Exceptions are added for purposes of
+    // statcheck regression testing.
     if (gamemode == commercial)
-	wminfo.partime = TICRATE*cpars[gamemap-1];
+    {
+        // map33 has no official time: initialize to zero
+        if (gamemap == 33)
+        {
+            wminfo.partime = 0;
+        }
+        else
+        {
+            wminfo.partime = TICRATE*cpars[gamemap-1];
+        }
+    }
+    // Doom episode 4 doesn't have a par time, so this
+    // overflows into the cpars array.
     else if (gameepisode < 4)
-	wminfo.partime = TICRATE*pars[gameepisode][gamemap];
+    {
+        wminfo.partime = TICRATE*pars[gameepisode][gamemap];
+    }
     else
+    {
         wminfo.partime = TICRATE*cpars[gamemap];
+    }
 
     wminfo.pnum = consoleplayer; 
  
@@ -1552,7 +1568,7 @@ void G_DoLoadGame (void)
 
     if (save_stream == NULL)
     {
-        return;
+        I_Error("Could not load savegame %s", savename);
     }
 
     savegame_error = false;
@@ -1726,7 +1742,7 @@ G_InitNew
   int		episode,
   int		map )
 {
-    char *skytexturename;
+    const char *skytexturename;
     int             i;
 
     if (paused)
@@ -2097,9 +2113,9 @@ void G_BeginRecording (void)
 // G_PlayDemo 
 //
 
-char*	defdemoname; 
+static const char *defdemoname;
  
-void G_DeferedPlayDemo (char* name) 
+void G_DeferedPlayDemo(const char *name)
 { 
     defdemoname = name; 
     gameaction = ga_playdemo; 
@@ -2107,7 +2123,7 @@ void G_DeferedPlayDemo (char* name)
 
 // Generate a string describing a demo version
 
-static char *DemoVersionDescription(int version)
+static const char *DemoVersionDescription(int version)
 {
     static char resultbuf[16];
 
@@ -2170,14 +2186,14 @@ void G_DoPlayDemo (void)
     }
     else if (demoversion != G_VanillaVersionCode())
     {
-        char *message = "Demo is from a different game version!\n"
-                        "(read %i, should be %i)\n"
-                        "\n"
-                        "*** You may need to upgrade your version "
-                            "of Doom to v1.9. ***\n"
-                        "    See: https://www.doomworld.com/classicdoom"
-                                  "/info/patches.php\n"
-                        "    This appears to be %s.";
+        const char *message = "Demo is from a different game version!\n"
+                              "(read %i, should be %i)\n"
+                              "\n"
+                              "*** You may need to upgrade your version "
+                                  "of Doom to v1.9. ***\n"
+                              "    See: https://www.doomworld.com/classicdoom"
+                                        "/info/patches.php\n"
+                              "    This appears to be %s.";
 
         I_Error(message, demoversion, G_VanillaVersionCode(),
                          DemoVersionDescription(demoversion));

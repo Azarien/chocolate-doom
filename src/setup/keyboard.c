@@ -87,7 +87,7 @@ static void UpdateJoybSpeed(TXT_UNCAST_ARG(widget), TXT_UNCAST_ARG(var))
     }
     else
     {
-        joybspeed = 0;
+        joybspeed = 2;
     }
 }
 
@@ -358,7 +358,7 @@ static void OtherKeysDialog(TXT_UNCAST_ARG(widget), TXT_UNCAST_ARG(unused))
     TXT_AddWidget(window, scrollpane);
 }
 
-void ConfigKeyboard(void)
+void ConfigKeyboard(TXT_UNCAST_ARG(widget), void *user_data)
 {
     txt_window_t *window;
     txt_checkbox_t *run_control;

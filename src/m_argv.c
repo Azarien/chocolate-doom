@@ -40,7 +40,7 @@ char**		myargv;
 // or 0 if not present
 //
 
-int M_CheckParmWithArgs(char *check, int num_args)
+int M_CheckParmWithArgs(const char *check, int num_args)
 {
     int i;
 
@@ -60,12 +60,12 @@ int M_CheckParmWithArgs(char *check, int num_args)
 // line arguments, false if not.
 //
 
-boolean M_ParmExists(char *check)
+boolean M_ParmExists(const char *check)
 {
     return M_CheckParm(check) != 0;
 }
 
-int M_CheckParm(char *check)
+int M_CheckParm(const char *check)
 {
     return M_CheckParmWithArgs(check, 0);
 }
@@ -243,19 +243,8 @@ void M_FindResponseFile(void)
 
 // Return the name of the executable used to start the program:
 
-char *M_GetExecutableName(void)
+const char *M_GetExecutableName(void)
 {
-    char *sep;
-
-    sep = strrchr(myargv[0], DIR_SEPARATOR);
-
-    if (sep == NULL)
-    {
-        return myargv[0];
-    }
-    else
-    {
-        return sep + 1;
-    }
+    return M_BaseName(myargv[0]);
 }
 

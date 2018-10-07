@@ -29,6 +29,7 @@
 #include "d_main.h"
 #include "deh_main.h"
 
+#include "i_input.h"
 #include "i_swap.h"
 #include "i_system.h"
 #include "i_timer.h"
@@ -92,7 +93,7 @@ int			quickSaveSlot;
  // 1 = message to be printed
 int			messageToPrint;
 // ...and here is the message string!
-char*			messageString;
+const char		*messageString;
 
 // message x & y
 int			messx;
@@ -205,9 +206,9 @@ void M_SetupNextMenu(menu_t *menudef);
 void M_DrawThermo(int x,int y,int thermWidth,int thermDot);
 void M_DrawEmptyCell(menu_t *menu,int item);
 void M_DrawSelCell(menu_t *menu,int item);
-int  M_StringWidth(char *string);
-int  M_StringHeight(char *string);
-void M_StartMessage(char *string,void *routine,boolean input);
+int  M_StringWidth(const char *string);
+int  M_StringHeight(const char *string);
+void M_StartMessage(const char *string,void *routine,boolean input);
 void M_StopMessage(void);
 
 
@@ -546,6 +547,7 @@ void M_ReadSaveStrings(void)
 
     for(i = 0; i < load_end; i++)
     {
+        int retval;
         if(fname)
             Z_Free(fname);
         fname = M_SafeFilePath(savegamedir, M_MakeStrifeSaveDir(i, "\\name"));
@@ -558,9 +560,9 @@ void M_ReadSaveStrings(void)
             LoadMenu[i].status = 0;
             continue;
         }
-        fread(savegamestrings[i], 1, SAVESTRINGSIZE, handle);
+        retval = fread(savegamestrings[i], 1, SAVESTRINGSIZE, handle);
         fclose(handle);
-        LoadMenu[i].status = 1;
+        LoadMenu[i].status = retval == SAVESTRINGSIZE;
     }
 
     if(fname)
@@ -752,8 +754,15 @@ void M_DoSave(int slot)
 //
 void M_SaveSelect(int choice)
 {
+    int x, y;
+
     // we are going to be intercepting all chars
     saveStringEnter = 1;
+
+    // We need to turn on text input:
+    x = LoadDef.x - 11;
+    y = LoadDef.y + choice * LINEHEIGHT - 4;
+    I_StartTextInput(x, y, x + 8 + 24 * 8 + 8, y + LINEHEIGHT - 2);
 
     // [STRIFE]
     quickSaveSlot = choice;
@@ -1453,7 +1462,7 @@ M_DrawSelCell
 
 void
 M_StartMessage
-( char*		string,
+( const char	*string,
   void*		routine,
   boolean	input )
 {
@@ -1479,7 +1488,7 @@ void M_StopMessage(void)
 //
 // Find string width from hu_font chars
 //
-int M_StringWidth(char* string)
+int M_StringWidth(const char *string)
 {
     size_t             i;
     int             w = 0;
@@ -1502,7 +1511,7 @@ int M_StringWidth(char* string)
 //
 //      Find string height from hu_font chars
 //
-int M_StringHeight(char* string)
+int M_StringHeight(const char *string)
 {
     size_t             i;
     int             h;
@@ -1849,6 +1858,7 @@ boolean M_Responder (event_t* ev)
 
         case KEY_ESCAPE:
             saveStringEnter = 0;
+            I_StopTextInput();
             M_StringCopy(savegamestrings[quickSaveSlot], saveOldString,
                          sizeof(savegamestrings[quickSaveSlot]));
             break;
@@ -1856,6 +1866,7 @@ boolean M_Responder (event_t* ev)
         case KEY_ENTER:
             // [STRIFE]
             saveStringEnter = 0;
+            I_StopTextInput();
             if(gameversion == exe_strife_1_31 && !namingCharacter)
             {
                // In 1.31, we can be here as a result of normal saving again,
@@ -1869,16 +1880,26 @@ boolean M_Responder (event_t* ev)
             break;
 
         default:
-            // This is complicated.
+            // Savegame name entry. This is complicated.
             // Vanilla has a bug where the shift key is ignored when entering
             // a savegame name. If vanilla_keyboard_mapping is on, we want
-            // to emulate this bug by using 'data1'. But if it's turned off,
-            // it implies the user doesn't care about Vanilla emulation: just
-            // use the correct 'data2'.
+            // to emulate this bug by using ev->data1. But if it's turned off,
+            // it implies the user doesn't care about Vanilla emulation:
+            // instead, use ev->data3 which gives the fully-translated and
+            // modified key input.
+
+            if (ev->type != ev_keydown)
+            {
+                break;
+            }
 
             if (vanilla_keyboard_mapping)
             {
-                ch = key;
+                ch = ev->data1;
+            }
+            else
+            {
+                ch = ev->data3;
             }
 
             ch = toupper(ch);
@@ -2271,7 +2292,7 @@ void M_Drawer (void)
     unsigned int	i;
     unsigned int	max;
     char		string[80];
-    char               *name;
+    const char          *name;
     int			start;
 
     inhelpscreens = false;

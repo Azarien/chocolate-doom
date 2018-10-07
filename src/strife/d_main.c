@@ -31,7 +31,6 @@
 #include "doomstat.h"
 
 #include "dstrings.h"
-#include "doomfeatures.h"
 #include "sounds.h"
 
 #include "txt_main.h"
@@ -59,6 +58,7 @@
 #include "p_dialog.h" // haleyjd [STRIFE]
 
 #include "i_endoom.h"
+#include "i_input.h"
 #include "i_joystick.h"
 #include "i_system.h"
 #include "i_timer.h"
@@ -402,6 +402,7 @@ void D_BindVariables(void)
 
     M_ApplyPlatformDefaults();
 
+    I_BindInputVariables();
     I_BindVideoVariables();
     I_BindJoystickVariables();
     I_BindSoundVariables();
@@ -423,9 +424,7 @@ void D_BindVariables(void)
     key_multi_msgplayer[6] = '7';
     key_multi_msgplayer[7] = '8';
 
-#ifdef FEATURE_MULTIPLAYER
     NET_BindVariables();
-#endif
 
     // haleyjd 08/29/10: [STRIFE]
     // * Added voice volume
@@ -554,7 +553,7 @@ void D_DoomLoop (void)
 //
 int             demosequence;
 int             pagetic;
-char                    *pagename;
+const char      *pagename;
 
 
 //
@@ -775,7 +774,7 @@ static char *banners[] =
 static char *GetGameName(char *gamename)
 {
     size_t i;
-    char *deh_sub;
+    const char *deh_sub;
     
     for (i=0; i<arrlen(banners); ++i)
     {
@@ -984,7 +983,7 @@ void PrintDehackedBanners(void)
 
     for (i=0; i<arrlen(copyright_banners); ++i)
     {
-        char *deh_s;
+        const char *deh_s;
 
         deh_s = DEH_String(copyright_banners[i]);
 
@@ -1515,7 +1514,6 @@ void D_DoomMain (void)
     //DEH_printf("Z_Init: Init zone memory allocation daemon. \n"); [STRIFE] removed
     Z_Init ();
 
-#ifdef FEATURE_MULTIPLAYER
     //!
     // @category net
     //
@@ -1572,9 +1570,8 @@ void D_DoomMain (void)
         exit(0);
     }
 
-#endif
-
     //!
+    // @category game
     // @vanilla
     //
     // Disable monsters.
@@ -1583,6 +1580,7 @@ void D_DoomMain (void)
     nomonsters = M_CheckParm ("-nomonsters");
 
     //!
+    // @category obscure
     // @vanilla
     //
     // Set Rogue playtesting mode (godmode, noclip toggled by backspace)
@@ -1591,6 +1589,7 @@ void D_DoomMain (void)
     workparm = M_CheckParm ("-work");
 
     //!
+    // @category obscure
     // @vanilla
     //
     // Flip player gun sprites (broken).
@@ -1599,6 +1598,7 @@ void D_DoomMain (void)
     flipparm = M_CheckParm ("-flip");
 
     //!
+    // @category game
     // @vanilla
     //
     // Respawn monsters after they are killed.
@@ -1607,6 +1607,7 @@ void D_DoomMain (void)
     respawnparm = M_CheckParm ("-respawn");
 
     //!
+    // @category game
     // @vanilla
     //
     // Items respawn at random locations
@@ -1615,6 +1616,7 @@ void D_DoomMain (void)
     randomparm = M_CheckParm ("-random");
 
     //!
+    // @category game
     // @vanilla
     //
     // Monsters move faster.
@@ -1651,6 +1653,7 @@ void D_DoomMain (void)
 #ifdef _WIN32
 
     //!
+    // @category obscure
     // @platform windows
     // @vanilla
     //
@@ -1674,6 +1677,7 @@ void D_DoomMain (void)
     }
     
     //!
+    // @category game
     // @arg <x>
     // @vanilla
     //
@@ -1730,11 +1734,10 @@ void D_DoomMain (void)
         DEH_printf("W_Init: Init WADfiles.\n");
     D_AddFile(iwadfile);
     W_CheckCorrectIWAD(strife);
+    D_IdentifyVersion();
 
-#ifdef FEATURE_DEHACKED
     // Load dehacked patches specified on the command line.
     DEH_ParseCommandLine();
-#endif
 
     // Load PWAD files.
     modifiedgame = W_ParseCommandLine();
@@ -1821,8 +1824,7 @@ void D_DoomMain (void)
     // Generate the WAD hash table.  Speed things up a bit.
 
     W_GenerateHashTable();
-    
-    D_IdentifyVersion();
+
     InitGameVersion();
     InitTitleString();
     D_SetGameDescription();
@@ -1835,11 +1837,9 @@ void D_DoomMain (void)
     I_InitSound(true);
     I_InitMusic();
 
-#ifdef FEATURE_MULTIPLAYER
     if(devparm) // [STRIFE]
         printf ("NET_Init: Init network subsystem.\n");
     NET_Init();
-#endif
     D_ConnectNetGame();
 
     // haleyjd 20110210: Create Strife hub save folders
@@ -1892,6 +1892,7 @@ void D_DoomMain (void)
     autostart = false;
 
     //!
+    // @category game
     // @arg <skill>
     // @vanilla
     //
@@ -1909,6 +1910,7 @@ void D_DoomMain (void)
 
     // [STRIFE] no such thing in Strife
     //
+    // // @category game
     // // @arg <n>
     // // @vanilla
     // //
@@ -1957,6 +1959,7 @@ void D_DoomMain (void)
     }
 
     //!
+    // @category game
     // @arg x
     // @vanilla
     //
@@ -1997,6 +2000,7 @@ void D_DoomMain (void)
     // can override it or send the load slot to other players.
 
     //!
+    // @category game
     // @arg <s>
     // @vanilla
     //
