@@ -69,9 +69,6 @@
     <ClInclude Include="..\src\i_joystick.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\i_scale.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\i_sound.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -327,6 +324,12 @@
     <ClInclude Include="..\src\v_diskicon.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\i_input.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\i_midipipe.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\d_event.c">
@@ -375,9 +378,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\src\i_pcsound.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\i_scale.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\src\i_sdlmusic.c">
@@ -675,6 +675,12 @@
       <Filter>Source Files\doom</Filter>
     </ClCompile>
     <ClCompile Include="..\src\v_diskicon.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\i_input.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\i_midipipe.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

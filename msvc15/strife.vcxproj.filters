@@ -69,9 +69,6 @@
     <ClInclude Include="..\src\i_joystick.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\i_scale.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\i_sound.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -178,9 +175,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\w_wad.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="win_opendir.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\z_zone.h">
@@ -342,6 +336,15 @@
     <ClInclude Include="..\src\v_diskicon.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\win32\win_opendir.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\i_midipipe.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\i_input.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\aes_prng.c">
@@ -393,9 +396,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\src\i_pcsound.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\i_scale.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\src\i_sdlmusic.c">
@@ -513,9 +513,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\src\w_wad.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="win_opendir.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\src\z_zone.c">
@@ -696,6 +693,15 @@
       <Filter>Source Files\strife</Filter>
     </ClCompile>
     <ClCompile Include="..\src\v_diskicon.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\win32\win_opendir.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\i_midipipe.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\i_input.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

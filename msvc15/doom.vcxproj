@@ -9,10 +9,6 @@
       <Configuration>Release</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Static|Win32">
-      <Configuration>Static</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectName>Doom</ProjectName>
@@ -22,12 +18,6 @@
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Static|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
-    <PlatformToolset>v141_xp</PlatformToolset>
-    <CharacterSet>NotSet</CharacterSet>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <PlatformToolset>v141_xp</PlatformToolset>
@@ -41,9 +31,6 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
-  </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Static|Win32'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -67,16 +54,10 @@
     <LinkIncremental />
     <TargetName>chocolate-doom</TargetName>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Static|Win32'">
-    <OutDir>..\bin\$(Configuration)\</OutDir>
-    <IntDir>..\obj\doom\$(Configuration)\</IntDir>
-    <LinkIncremental />
-    <TargetName>chocolate-doom</TargetName>
-  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\SDL_mixer-1.2.12;..\..\SDL_net-1.2.8;..\..\SDL-1.2.15\include;.;..\src;..\src\doom;..\textscreen;..\pcsound;..\opl;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\SDL2-2.0.8\include;..\..\SDL2_mixer-2.0.2\include;..\..\SDL2_net-2.0.1\include;.;..\src;..\src\doom;..\textscreen;..\pcsound;..\opl;..\win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;PROGRAM_PREFIX="chocolate-";%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <ExceptionHandling />
@@ -94,8 +75,8 @@
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
     <Link>
-      <AdditionalDependencies>SDL.lib;SDL_mixer.lib;SDL_net.lib;SDLmain.lib;libtextscreen.lib;libopl.lib;libpcsound.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\..\SDL-1.2.15\VisualC\SDLmain\$(Configuration);..\..\SDL-1.2.15\VisualC\$(Configuration);..\..\SDL_net-1.2.8\VisualC\$(Configuration);..\..\SDL_mixer-1.2.12\VisualC\$(Configuration);..\lib\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_mixer.lib;SDL2_net.lib;libtextscreen.lib;libopl.lib;libpcsound.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\SDL2-2.0.8\lib\x86;..\..\SDL2_net-2.0.1\lib\x86;..\..\SDL2_mixer-2.0.2\lib\x86;..\lib\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>msvcrt;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
@@ -107,7 +88,7 @@
     <ClCompile>
       <Optimization>Full</Optimization>
       <WholeProgramOptimization>true</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>..\..\SDL_mixer-1.2.12;..\..\SDL_net-1.2.8;..\..\SDL-1.2.15\include;.;..\src;..\src\doom;..\textscreen;..\pcsound;..\opl;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\SDL2-2.0.8\include;..\..\SDL2_mixer-2.0.2\include;..\..\SDL2_net-2.0.1\include;.;..\src;..\src\doom;..\textscreen;..\pcsound;..\opl;..\win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;PROGRAM_PREFIX="chocolate-";%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -120,39 +101,8 @@
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
     <Link>
-      <AdditionalDependencies>SDL.lib;SDL_mixer.lib;SDL_net.lib;SDLmain.lib;libtextscreen.lib;libopl.lib;libpcsound.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\..\SDL-1.2.15\VisualC\SDLmain\$(Configuration);..\..\SDL-1.2.15\VisualC\$(Configuration);..\..\SDL_net-1.2.8\VisualC\$(Configuration);..\..\SDL_mixer-1.2.12\VisualC\$(Configuration);..\lib\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <IgnoreSpecificDefaultLibraries>msvcrtd;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
-      <GenerateDebugInformation>false</GenerateDebugInformation>
-      <GenerateMapFile>true</GenerateMapFile>
-      <SubSystem>Windows</SubSystem>
-      <OptimizeReferences>true</OptimizeReferences>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
-      <DataExecutionPrevention />
-      <TurnOffAssemblyGeneration>false</TurnOffAssemblyGeneration>
-      <TargetMachine>MachineX86</TargetMachine>
-    </Link>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Static|Win32'">
-    <ClCompile>
-      <Optimization>Full</Optimization>
-      <WholeProgramOptimization>true</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>..\..\SDL_mixer-1.2.12;..\..\SDL_net-1.2.8;..\..\SDL-1.2.15\include;.;..\src;..\src\doom;..\textscreen;..\pcsound;..\opl;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;PROGRAM_PREFIX="chocolate-";%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <PrecompiledHeader />
-      <WarningLevel>Level3</WarningLevel>
-      <DebugInformationFormat />
-      <CompileAs>CompileAsC</CompileAs>
-    </ClCompile>
-    <ProjectReference>
-      <LinkLibraryDependencies>false</LinkLibraryDependencies>
-    </ProjectReference>
-    <Link>
-      <AdditionalDependencies>SDL.lib;SDL_mixer.lib;SDL_net.lib;SDLmain.lib;libtextscreen.lib;libopl.lib;libpcsound.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\..\SDL-1.2.15\VisualC\SDLmain\$(Configuration);..\..\SDL-1.2.15\VisualC\$(Configuration);..\..\SDL_net-1.2.8\VisualC\$(Configuration);..\..\SDL_mixer-1.2.12\VisualC\$(Configuration);..\lib\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_mixer.lib;SDL2_net.lib;libtextscreen.lib;libopl.lib;libpcsound.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\SDL2-2.0.8\lib\x86;..\..\SDL2_net-2.0.1\lib\x86;..\..\SDL2_mixer-2.0.2\lib\x86;..\lib\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>msvcrtd;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <GenerateMapFile>true</GenerateMapFile>
@@ -229,8 +179,9 @@
     <ClInclude Include="..\src\gusconf.h" />
     <ClInclude Include="..\src\i_cdmus.h" />
     <ClInclude Include="..\src\i_endoom.h" />
+    <ClInclude Include="..\src\i_input.h" />
     <ClInclude Include="..\src\i_joystick.h" />
-    <ClInclude Include="..\src\i_scale.h" />
+    <ClInclude Include="..\src\i_midipipe.h" />
     <ClInclude Include="..\src\i_sound.h" />
     <ClInclude Include="..\src\i_swap.h" />
     <ClInclude Include="..\src\i_system.h" />
@@ -342,11 +293,12 @@
     <ClCompile Include="..\src\icon.c" />
     <ClCompile Include="..\src\i_cdmus.c" />
     <ClCompile Include="..\src\i_endoom.c" />
+    <ClCompile Include="..\src\i_input.c" />
     <ClCompile Include="..\src\i_joystick.c" />
     <ClCompile Include="..\src\i_main.c" />
+    <ClCompile Include="..\src\i_midipipe.c" />
     <ClCompile Include="..\src\i_oplmusic.c" />
     <ClCompile Include="..\src\i_pcsound.c" />
-    <ClCompile Include="..\src\i_scale.c" />
     <ClCompile Include="..\src\i_sdlmusic.c" />
     <ClCompile Include="..\src\i_sdlsound.c" />
     <ClCompile Include="..\src\i_sound.c" />
