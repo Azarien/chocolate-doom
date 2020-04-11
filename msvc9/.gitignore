@@ -1,0 +1,10 @@
+*.cfg
+*.ncb
+*.suo
+*.user
+savegames
+strfsav*
+*.pcx
+SDL*
+begin_code.h
+close_code.h/*.WAD

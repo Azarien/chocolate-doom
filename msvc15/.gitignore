@@ -1,0 +1,12 @@
+*.cfg
+*.ncb
+*.suo
+*.user
+savegames
+strfsav*
+*.pcx
+*.sdf
+/*.opensdf
+/*.WAD
+/hexndata
+.vs
