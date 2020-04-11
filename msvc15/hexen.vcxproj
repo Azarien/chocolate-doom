@@ -103,6 +103,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\crispy.c" />
     <ClCompile Include="..\src\deh_str.c" />
     <ClCompile Include="..\src\d_event.c" />
     <ClCompile Include="..\src\d_iwad.c" />
@@ -210,6 +211,7 @@
     <ClCompile Include="..\win32\win_opendir.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\src\crispy.h" />
     <ClInclude Include="..\src\deh_str.h" />
     <ClInclude Include="..\src\doomfeatures.h" />
     <ClInclude Include="..\src\doomkeys.h" />

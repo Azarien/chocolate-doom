@@ -72,6 +72,9 @@
     <ClCompile Include="..\src\m_config.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\crispy.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\d_mode.h">
@@ -123,6 +126,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\m_config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\crispy.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

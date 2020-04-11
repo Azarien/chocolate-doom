@@ -104,6 +104,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\crispy.c" />
     <ClCompile Include="..\src\deh_str.c" />
     <ClCompile Include="..\src\d_dedicated.c" />
     <ClCompile Include="..\src\d_iwad.c" />
@@ -125,6 +126,7 @@
     <ClCompile Include="..\src\z_native.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\src\crispy.h" />
     <ClInclude Include="..\src\deh_str.h" />
     <ClInclude Include="..\src\d_iwad.h" />
     <ClInclude Include="..\src\d_mode.h" />

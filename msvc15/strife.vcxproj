@@ -113,6 +113,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\src\aes_prng.h" />
+    <ClInclude Include="..\src\crispy.h" />
     <ClInclude Include="..\src\deh_io.h" />
     <ClInclude Include="..\src\deh_main.h" />
     <ClInclude Include="..\src\deh_mapping.h" />
@@ -226,6 +227,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\aes_prng.c" />
+    <ClCompile Include="..\src\crispy.c" />
     <ClCompile Include="..\src\deh_io.c" />
     <ClCompile Include="..\src\deh_main.c" />
     <ClCompile Include="..\src\deh_mapping.c" />

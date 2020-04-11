@@ -348,6 +348,9 @@
     <ClCompile Include="..\win32\win_opendir.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\crispy.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\d_event.h">
@@ -570,6 +573,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\net_petname.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\crispy.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

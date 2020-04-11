@@ -339,6 +339,33 @@
     <ClInclude Include="..\win32\win_opendir.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\crispy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\doom\m_crispy.h">
+      <Filter>Header Files\doom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\doom\p_extnodes.h">
+      <Filter>Header Files\doom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\doom\deh_bexpars.h">
+      <Filter>Header Files\doom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\doom\r_bmaps.h">
+      <Filter>Header Files\doom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\doom\s_musinfo.h">
+      <Filter>Header Files\doom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\doom\p_extsaveg.h">
+      <Filter>Header Files\doom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\doom\r_swirl.h">
+      <Filter>Header Files\doom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\v_trans.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\d_event.c">
@@ -702,6 +729,45 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\win32\win_opendir.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\crispy.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\doom\m_crispy.c">
+      <Filter>Source Files\doom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\doom\p_bexptr.c">
+      <Filter>Source Files\doom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\doom\p_extnodes.c">
+      <Filter>Source Files\doom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\doom\deh_bexpars.c">
+      <Filter>Source Files\doom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\doom\r_bmaps.c">
+      <Filter>Source Files\doom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\doom\deh_bexptr.c">
+      <Filter>Source Files\doom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\doom\s_musinfo.c">
+      <Filter>Source Files\doom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\doom\p_blockmap.c">
+      <Filter>Source Files\doom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\doom\p_extsaveg.c">
+      <Filter>Source Files\doom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\doom\r_swirl.c">
+      <Filter>Source Files\doom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\doom\deh_bexincl.c">
+      <Filter>Source Files\doom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\v_trans.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

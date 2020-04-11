@@ -102,6 +102,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\crispy.c" />
     <ClCompile Include="..\src\deh_io.c" />
     <ClCompile Include="..\src\deh_main.c" />
     <ClCompile Include="..\src\deh_mapping.c" />
@@ -213,6 +214,7 @@
     <ClCompile Include="..\win32\win_opendir.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\src\crispy.h" />
     <ClInclude Include="..\src\deh_defs.h" />
     <ClInclude Include="..\src\deh_io.h" />
     <ClInclude Include="..\src\deh_main.h" />
