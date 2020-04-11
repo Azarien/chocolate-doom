@@ -111,6 +111,9 @@
     <ClCompile Include="..\src\z_zone.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\net_petname.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\setup\compatibility.h">
@@ -198,6 +201,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\z_zone.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\net_petname.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

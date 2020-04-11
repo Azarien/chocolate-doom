@@ -115,6 +115,7 @@
     <ClCompile Include="..\src\m_misc.c" />
     <ClCompile Include="..\src\net_io.c" />
     <ClCompile Include="..\src\net_packet.c" />
+    <ClCompile Include="..\src\net_petname.c" />
     <ClCompile Include="..\src\net_query.c" />
     <ClCompile Include="..\src\net_sdl.c" />
     <ClCompile Include="..\src\net_structrw.c" />
@@ -148,6 +149,7 @@
     <ClInclude Include="..\src\m_misc.h" />
     <ClInclude Include="..\src\net_io.h" />
     <ClInclude Include="..\src\net_packet.h" />
+    <ClInclude Include="..\src\net_petname.h" />
     <ClInclude Include="..\src\net_query.h" />
     <ClInclude Include="..\src\net_sdl.h" />
     <ClInclude Include="..\src\net_structrw.h" />

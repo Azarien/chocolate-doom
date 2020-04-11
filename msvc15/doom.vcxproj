@@ -179,6 +179,7 @@
     <ClInclude Include="..\src\gusconf.h" />
     <ClInclude Include="..\src\i_cdmus.h" />
     <ClInclude Include="..\src\i_endoom.h" />
+    <ClInclude Include="..\src\i_glob.h" />
     <ClInclude Include="..\src\i_input.h" />
     <ClInclude Include="..\src\i_joystick.h" />
     <ClInclude Include="..\src\i_midipipe.h" />
@@ -205,6 +206,7 @@
     <ClInclude Include="..\src\net_io.h" />
     <ClInclude Include="..\src\net_loop.h" />
     <ClInclude Include="..\src\net_packet.h" />
+    <ClInclude Include="..\src\net_petname.h" />
     <ClInclude Include="..\src\net_query.h" />
     <ClInclude Include="..\src\net_sdl.h" />
     <ClInclude Include="..\src\net_server.h" />
@@ -220,6 +222,7 @@
     <ClInclude Include="..\src\w_merge.h" />
     <ClInclude Include="..\src\w_wad.h" />
     <ClInclude Include="..\src\z_zone.h" />
+    <ClInclude Include="..\win32\win_opendir.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\deh_io.c" />
@@ -293,10 +296,12 @@
     <ClCompile Include="..\src\icon.c" />
     <ClCompile Include="..\src\i_cdmus.c" />
     <ClCompile Include="..\src\i_endoom.c" />
+    <ClCompile Include="..\src\i_glob.c" />
     <ClCompile Include="..\src\i_input.c" />
     <ClCompile Include="..\src\i_joystick.c" />
     <ClCompile Include="..\src\i_main.c" />
     <ClCompile Include="..\src\i_midipipe.c" />
+    <ClCompile Include="..\src\i_musicpack.c" />
     <ClCompile Include="..\src\i_oplmusic.c" />
     <ClCompile Include="..\src\i_pcsound.c" />
     <ClCompile Include="..\src\i_sdlmusic.c" />
@@ -322,6 +327,7 @@
     <ClCompile Include="..\src\net_io.c" />
     <ClCompile Include="..\src\net_loop.c" />
     <ClCompile Include="..\src\net_packet.c" />
+    <ClCompile Include="..\src\net_petname.c" />
     <ClCompile Include="..\src\net_query.c" />
     <ClCompile Include="..\src\net_sdl.c" />
     <ClCompile Include="..\src\net_server.c" />
@@ -339,6 +345,7 @@
     <ClCompile Include="..\src\w_merge.c" />
     <ClCompile Include="..\src\w_wad.c" />
     <ClCompile Include="..\src\z_zone.c" />
+    <ClCompile Include="..\win32\win_opendir.c" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="win32.rc" />

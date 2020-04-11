@@ -104,12 +104,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\deh_str.c" />
     <ClCompile Include="..\src\d_dedicated.c" />
+    <ClCompile Include="..\src\d_iwad.c" />
     <ClCompile Include="..\src\d_mode.c" />
     <ClCompile Include="..\src\i_main.c" />
     <ClCompile Include="..\src\i_system.c" />
     <ClCompile Include="..\src\i_timer.c" />
     <ClCompile Include="..\src\m_argv.c" />
+    <ClCompile Include="..\src\m_config.c" />
     <ClCompile Include="..\src\m_misc.c" />
     <ClCompile Include="..\src\net_common.c" />
     <ClCompile Include="..\src\net_dedicated.c" />
@@ -122,10 +125,13 @@
     <ClCompile Include="..\src\z_native.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\src\deh_str.h" />
+    <ClInclude Include="..\src\d_iwad.h" />
     <ClInclude Include="..\src\d_mode.h" />
     <ClInclude Include="..\src\i_system.h" />
     <ClInclude Include="..\src\i_timer.h" />
     <ClInclude Include="..\src\m_argv.h" />
+    <ClInclude Include="..\src\m_config.h" />
     <ClInclude Include="..\src\m_misc.h" />
     <ClInclude Include="..\src\net_common.h" />
     <ClInclude Include="..\src\net_dedicated.h" />
