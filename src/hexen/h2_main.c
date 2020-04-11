@@ -93,7 +93,7 @@ extern boolean askforquit;
 // PUBLIC DATA DEFINITIONS -------------------------------------------------
 
 GameMode_t gamemode;
-char *gamedescription;
+static const char *gamedescription;
 char *iwadfile;
 static char demolumpname[9];    // Demo lump to start playing.
 boolean nomonsters;             // checkparm of -nomonsters
@@ -119,7 +119,7 @@ int maxplayers = MAXPLAYERS;
 static int WarpMap;
 static int demosequence;
 static int pagetic;
-static char *pagename;
+static const char *pagename;
 static char *SavePathConfig;
 
 // CODE --------------------------------------------------------------------
@@ -422,7 +422,24 @@ void D_DoomMain(void)
     D_SetGameDescription();
     AdjustForMacIWAD();
 
+    //!
+    // @category mod
+    //
+    // Disable auto-loading of .wad files.
+    //
+    if (!M_ParmExists("-noautoload"))
+    {
+        char *autoload_dir;
+        autoload_dir = M_GetAutoloadDir("hexen.wad");
+        // TODO? DEH_AutoLoadPatches(autoload_dir);
+        W_AutoLoadWADs(autoload_dir);
+        free(autoload_dir);
+    }
+
     HandleArgs();
+
+    // Generate the WAD hash table.  Speed things up a bit.
+    W_GenerateHashTable();
 
     I_PrintStartupBanner(gamedescription);
 

@@ -38,6 +38,7 @@
 #include "i_system.h"
 #include "i_timer.h"
 #include "i_input.h"
+#include "i_swap.h"
 #include "i_video.h"
 
 #include "p_setup.h"
@@ -1460,10 +1461,15 @@ void G_DoCompleted (void)
     // statcheck regression testing.
     if (gamemode == commercial)
     {
-        // map33 has no official time: initialize to zero
+        // map33 reads its par time from beyond the cpars[] array
         if (gamemap == 33)
         {
-            wminfo.partime = 0;
+            int cpars32;
+
+            memcpy(&cpars32, DEH_String(GAMMALVL0), sizeof(int));
+            cpars32 = LONG(cpars32);
+
+            wminfo.partime = TICRATE*cpars32;
         }
         else
         {
@@ -1866,12 +1872,13 @@ G_InitNew
 
     if (gamemode == commercial)
     {
-        if (gamemap < 12)
-            skytexturename = "SKY1";
-        else if (gamemap < 21)
-            skytexturename = "SKY2";
-        else
-            skytexturename = "SKY3";
+        skytexturename = DEH_String("SKY3");
+        skytexture = R_TextureNumForName(skytexturename);
+        if (gamemap < 21)
+        {
+            skytexturename = DEH_String(gamemap < 12 ? "SKY1" : "SKY2");
+            skytexture = R_TextureNumForName(skytexturename);
+        }
     }
     else
     {
@@ -1891,12 +1898,9 @@ G_InitNew
             skytexturename = "SKY4";
             break;
         }
+        skytexturename = DEH_String(skytexturename);
+        skytexture = R_TextureNumForName(skytexturename);
     }
-
-    skytexturename = DEH_String(skytexturename);
-
-    skytexture = R_TextureNumForName(skytexturename);
-
 
     G_DoLoadLevel ();
 }
@@ -2054,8 +2058,6 @@ int G_VanillaVersionCode(void)
 {
     switch (gameversion)
     {
-        case exe_doom_1_2:
-            I_Error("Doom 1.2 does not have a version code!");
         case exe_doom_1_666:
             return 106;
         case exe_doom_1_7:
@@ -2090,7 +2092,7 @@ void G_BeginRecording (void)
     {
         *demo_p++ = DOOM_191_VERSION;
     }
-    else
+    else if (gameversion > exe_doom_1_2)
     {
         *demo_p++ = G_VanillaVersionCode();
     }
@@ -2098,11 +2100,14 @@ void G_BeginRecording (void)
     *demo_p++ = gameskill; 
     *demo_p++ = gameepisode; 
     *demo_p++ = gamemap; 
-    *demo_p++ = deathmatch; 
-    *demo_p++ = respawnparm;
-    *demo_p++ = fastparm;
-    *demo_p++ = nomonsters;
-    *demo_p++ = consoleplayer;
+    if (longtics || gameversion > exe_doom_1_2)
+    {
+        *demo_p++ = deathmatch; 
+        *demo_p++ = respawnparm;
+        *demo_p++ = fastparm;
+        *demo_p++ = nomonsters;
+        *demo_p++ = consoleplayer;
+    }
 	 
     for (i=0 ; i<MAXPLAYERS ; i++) 
 	*demo_p++ = playeringame[i]; 		 
@@ -2167,6 +2172,7 @@ void G_DoPlayDemo (void)
     skill_t skill;
     int i, lumpnum, episode, map;
     int demoversion;
+    boolean olddemo = false;
 
     lumpnum = W_GetNumForName(defdemoname);
     gameaction = ga_nothing;
@@ -2174,6 +2180,12 @@ void G_DoPlayDemo (void)
     demo_p = demobuffer;
 
     demoversion = *demo_p++;
+
+    if (demoversion >= 0 && demoversion <= 4)
+    {
+        olddemo = true;
+        demo_p--;
+    }
 
     longtics = false;
 
@@ -2184,7 +2196,8 @@ void G_DoPlayDemo (void)
     {
         longtics = true;
     }
-    else if (demoversion != G_VanillaVersionCode())
+    else if (demoversion != G_VanillaVersionCode() &&
+             !(gameversion <= exe_doom_1_2 && olddemo))
     {
         const char *message = "Demo is from a different game version!\n"
                               "(read %i, should be %i)\n"
@@ -2202,12 +2215,24 @@ void G_DoPlayDemo (void)
     skill = *demo_p++; 
     episode = *demo_p++; 
     map = *demo_p++; 
-    deathmatch = *demo_p++;
-    respawnparm = *demo_p++;
-    fastparm = *demo_p++;
-    nomonsters = *demo_p++;
-    consoleplayer = *demo_p++;
-	
+    if (!olddemo)
+    {
+        deathmatch = *demo_p++;
+        respawnparm = *demo_p++;
+        fastparm = *demo_p++;
+        nomonsters = *demo_p++;
+        consoleplayer = *demo_p++;
+    }
+    else
+    {
+        deathmatch = 0;
+        respawnparm = 0;
+        fastparm = 0;
+        nomonsters = 0;
+        consoleplayer = 0;
+    }
+    
+        
     for (i=0 ; i<MAXPLAYERS ; i++) 
 	playeringame[i] = *demo_p++; 
 

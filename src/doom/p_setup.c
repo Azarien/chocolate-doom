@@ -20,6 +20,7 @@
 
 
 #include <math.h>
+#include <stdlib.h>
 
 #include "z_zone.h"
 
@@ -398,6 +399,7 @@ void P_LoadThings (int lump)
             {
                 I_Error("P_LoadThings: Player %d start missing (vanilla crashes here)", i + 1);
             }
+            playerstartsingame[i] = false;
         }
     }
 
@@ -713,7 +715,7 @@ static void PadRejectArray(byte *array, unsigned int len)
 
     if (len > sizeof(rejectpad))
     {
-        fprintf(stderr, "PadRejectArray: REJECT lump too short to pad! (%i > %i)\n",
+        fprintf(stderr, "PadRejectArray: REJECT lump too short to pad! (%u > %i)\n",
                         len, (int) sizeof(rejectpad));
 
         // Pad remaining space with 0 (or 0xff, if specified on command line).
@@ -758,6 +760,9 @@ static void P_LoadReject(int lumpnum)
         PadRejectArray(rejectmatrix + lumplen, minlength - lumplen);
     }
 }
+
+// pointer to the current map lump info struct
+lumpinfo_t *maplumpinfo;
 
 //
 // P_SetupLevel
@@ -815,6 +820,8 @@ P_SetupLevel
 
     lumpnum = W_GetNumForName (lumpname);
 	
+    maplumpinfo = lumpinfo[lumpnum];
+
     leveltime = 0;
 	
     // note: most of this ordering is important	

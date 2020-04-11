@@ -45,6 +45,9 @@ static int *controls[] = { &key_left, &key_right, &key_up, &key_down,
                            &key_weapon1, &key_weapon2, &key_weapon3,
                            &key_weapon4, &key_weapon5, &key_weapon6,
                            &key_weapon7, &key_weapon8,
+                           &key_arti_quartz, &key_arti_urn, &key_arti_bomb,
+                           &key_arti_tome, &key_arti_ring, &key_arti_chaosdevice,
+                           &key_arti_shadowsphere, &key_arti_wings, &key_arti_torch,
                            &key_arti_all, &key_arti_health, &key_arti_poisonbag,
                            &key_arti_blastradius, &key_arti_teleport,
                            &key_arti_teleportother, &key_arti_egg,
@@ -146,7 +149,7 @@ static void KeySetCallback(TXT_UNCAST_ARG(widget), TXT_UNCAST_ARG(variable))
 
 // Add a label and keyboard input to the specified table.
 
-static void AddKeyControl(TXT_UNCAST_ARG(table), char *name, int *var)
+static void AddKeyControl(TXT_UNCAST_ARG(table), const char *name, int *var)
 {
     TXT_CAST_ARG(txt_table_t, table);
     txt_key_input_t *key_input;
@@ -158,7 +161,7 @@ static void AddKeyControl(TXT_UNCAST_ARG(table), char *name, int *var)
     TXT_SignalConnect(key_input, "set", KeySetCallback, var);
 }
 
-static void AddSectionLabel(TXT_UNCAST_ARG(table), char *title,
+static void AddSectionLabel(TXT_UNCAST_ARG(table), const char *title,
                             boolean add_space)
 {
     TXT_CAST_ARG(txt_table_t, table);
@@ -238,6 +241,21 @@ static void ConfigExtraKeys(TXT_UNCAST_ARG(widget), TXT_UNCAST_ARG(unused))
         else
         {
             AddKeyControl(table, "Use artifact", &key_useartifact);
+        }
+
+        if (gamemission == heretic)
+        {
+            AddSectionLabel(table, "Artifacts", true);
+
+            AddKeyControl(table, "Quartz Flask", &key_arti_quartz);
+            AddKeyControl(table, "Mystic Urn", &key_arti_urn);
+            AddKeyControl(table, "Timebomb", &key_arti_bomb);
+            AddKeyControl(table, "Tome of Power", &key_arti_tome);
+            AddKeyControl(table, "Ring of Invincibility ", &key_arti_ring);
+            AddKeyControl(table, "Chaos Device", &key_arti_chaosdevice);
+            AddKeyControl(table, "Shadowsphere", &key_arti_shadowsphere);
+            AddKeyControl(table, "Wings of Wrath", &key_arti_wings);
+            AddKeyControl(table, "Torch", &key_arti_torch);
         }
 
         if (gamemission == hexen)

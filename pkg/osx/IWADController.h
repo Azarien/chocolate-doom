@@ -28,6 +28,8 @@
     id doom2;
     id plutonia;
     id tnt;
+    id freedoom1;
+    id freedoom2;
     id freedm;
 
     id heretic;
@@ -38,6 +40,7 @@
 - (void) closeConfigWindow: (id)sender;
 - (void) openConfigWindow: (id)sender;
 - (NSString *) getIWADLocation;
+- (NSString *) autoloadPath;
 - (void) awakeFromNib;
 - (BOOL) setDropdownList;
 - (void) setDropdownSelection;

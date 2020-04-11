@@ -40,15 +40,30 @@ static const iwad_t iwads[] =
     { "doom1.wad",    doom,      shareware,  "Doom Shareware" },
     { "chex.wad",     pack_chex, retail,     "Chex Quest" },
     { "hacx.wad",     pack_hacx, commercial, "Hacx" },
-    { "freedm.wad",   doom2,     commercial, "FreeDM" },
     { "freedoom2.wad", doom2,    commercial, "Freedoom: Phase 2" },
     { "freedoom1.wad", doom,     retail,     "Freedoom: Phase 1" },
+    { "freedm.wad",   doom2,     commercial, "FreeDM" },
     { "heretic.wad",  heretic,   retail,     "Heretic" },
     { "heretic1.wad", heretic,   shareware,  "Heretic Shareware" },
     { "hexen.wad",    hexen,     commercial, "Hexen" },
     //{ "strife0.wad",  strife,    commercial, "Strife" }, // haleyjd: STRIFE-FIXME
     { "strife1.wad",  strife,    commercial, "Strife" },
 };
+
+boolean D_IsIWADName(const char *name)
+{
+    int i;
+
+    for (i = 0; i < arrlen(iwads); i++)
+    {
+        if (!strcasecmp(name, iwads[i].name))
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
 
 // Array of locations to search for IWAD files
 //
@@ -385,8 +400,7 @@ static void CheckSteamGUSPatches(void)
 {
     const char *current_path;
     char *install_path;
-    char *patch_path;
-    int len;
+    char *test_patch_path, *patch_path;
 
     // Already configured? Don't stomp on the user's choices.
     current_path = M_GetStringVariable("gus_patch_path");
@@ -402,19 +416,17 @@ static void CheckSteamGUSPatches(void)
         return;
     }
 
-    len = strlen(install_path) + strlen(STEAM_BFG_GUS_PATCHES) + 20;
-    patch_path = malloc(len);
-    M_snprintf(patch_path, len, "%s\\%s\\ACBASS.PAT",
-               install_path, STEAM_BFG_GUS_PATCHES);
+    patch_path = M_StringJoin(install_path, "\\", STEAM_BFG_GUS_PATCHES,
+                              NULL);
+    test_patch_path = M_StringJoin(patch_path, "\\ACBASS.PAT", NULL);
 
     // Does acbass.pat exist? If so, then set gus_patch_path.
-    if (M_FileExists(patch_path))
+    if (M_FileExists(test_patch_path))
     {
-        M_snprintf(patch_path, len, "%s\\%s",
-                   install_path, STEAM_BFG_GUS_PATCHES);
         M_SetVariable("gus_patch_path", patch_path);
     }
 
+    free(test_patch_path);
     free(patch_path);
     free(install_path);
 }
@@ -484,6 +496,7 @@ static char *CheckDirectoryHasIWAD(const char *dir, const char *iwadname)
         filename = M_StringJoin(dir, DIR_SEPARATOR_S, iwadname, NULL);
     }
 
+    free(probe);
     probe = M_FileCaseExists(filename);
     free(filename);
     if (probe != NULL)
@@ -677,6 +690,7 @@ static void AddSteamDirs(void)
     AddIWADPath(steampath, "/Hexen/base");
     AddIWADPath(steampath, "/Hexen Deathkings of the Dark Citadel/base");
     AddIWADPath(steampath, "/Strife");
+    free(steampath);
 }
 #endif // __MACOSX__
 #endif // !_WIN32
@@ -773,6 +787,7 @@ char *D_FindWADByName(const char *name)
         {
             return probe;
         }
+        free(probe);
 
         // Construct a string for the full path
 

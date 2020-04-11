@@ -22,6 +22,7 @@
 #include "m_config.h"
 #include "m_misc.h"
 
+#include "execute.h"
 #include "mode.h"
 #include "sound.h"
 
@@ -113,9 +114,18 @@ static txt_dropdown_list_t *OPLTypeSelector(void)
     return result;
 }
 
+static void OpenMusicPackDir(TXT_UNCAST_ARG(widget), TXT_UNCAST_ARG(unused))
+{
+    if (!OpenFolder(music_pack_path))
+    {
+        TXT_MessageBox("Error", "Failed to open music pack directory.");
+    }
+}
+
 void ConfigSound(TXT_UNCAST_ARG(widget), void *user_data)
 {
     txt_window_t *window;
+    txt_window_action_t *music_action;
 
     // Build the window
 
@@ -125,6 +135,10 @@ void ConfigSound(TXT_UNCAST_ARG(widget), void *user_data)
     TXT_SetColumnWidths(window, 40);
     TXT_SetWindowPosition(window, TXT_HORIZ_CENTER, TXT_VERT_TOP,
                                   TXT_SCREEN_W / 2, 3);
+
+    music_action = TXT_NewWindowAction('m', "Music Packs");
+    TXT_SetWindowAction(window, TXT_HORIZ_CENTER, music_action);
+    TXT_SignalConnect(music_action, "pressed", OpenMusicPackDir, NULL);
 
     TXT_AddWidgets(window,
         TXT_NewSeparator("Sound effects"),
@@ -181,13 +195,6 @@ void ConfigSound(TXT_UNCAST_ARG(widget), void *user_data)
                 TXT_NewFileSelector(&timidity_cfg_path, 34,
                                     "Select Timidity config file",
                                     cfg_extension),
-                TXT_NewStrut(4, 0),
-                TXT_NewLabel("Digital music pack directory: "),
-                TXT_NewStrut(4, 0),
-                TXT_NewFileSelector(&music_pack_path, 34,
-                                    "Select directory containing music pack "
-                                    "config files",
-                                    TXT_DIRECTORY),
                 NULL)),
         NULL);
 }

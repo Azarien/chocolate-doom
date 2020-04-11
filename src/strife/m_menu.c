@@ -146,8 +146,8 @@ short		whichCursor;		// which skull to draw
 
 // graphic name of cursors
 // haleyjd 08/27/10: [STRIFE] M_SKULL* -> M_CURS*
-char    *cursorName[8] = {"M_CURS1", "M_CURS2", "M_CURS3", "M_CURS4", 
-                          "M_CURS5", "M_CURS6", "M_CURS7", "M_CURS8" };
+const char *cursorName[8] = {"M_CURS1", "M_CURS2", "M_CURS3", "M_CURS4",
+                             "M_CURS5", "M_CURS6", "M_CURS7", "M_CURS8" };
 
 // haleyjd 20110210 [STRIFE]: skill level for menus
 int menuskill;
@@ -555,7 +555,7 @@ void M_ReadSaveStrings(void)
         handle = fopen(fname, "rb");
         if(handle == NULL)
         {
-            M_StringCopy(savegamestrings[i], EMPTYSTRING,
+            M_StringCopy(savegamestrings[i], DEH_String(EMPTYSTRING),
                          sizeof(savegamestrings[i]));
             LoadMenu[i].status = 0;
             continue;
@@ -769,7 +769,7 @@ void M_SaveSelect(int choice)
     //saveSlot = choice;
 
     M_StringCopy(saveOldString, savegamestrings[choice], sizeof(saveOldString));
-    if (!strcmp(savegamestrings[choice],EMPTYSTRING))
+    if (!strcmp(savegamestrings[choice], DEH_String(EMPTYSTRING)))
         savegamestrings[choice][0] = 0;
     saveCharIndex = strlen(savegamestrings[choice]);
 }
